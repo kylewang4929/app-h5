@@ -1,0 +1,81 @@
+@keyframes wifiFadeInOut
+{
+0% {opacity: 0;}
+50% {opacity: 1;}
+100% {opacity: 1;}
+}
+@keyframes wifiFadeInOut2
+{
+from {opacity: 0;}
+to {opacity: 1;}
+}
+
+@keyframes bgMove
+{
+from {background-position: 40% 80%;}
+to {background-position: 50% 90%;}
+}
+
+.device-none-animate{
+  opacity: 0;
+  transition: all .775s ease-in-out;
+  .bg-animate {
+    background-position: 50% 90%;
+    animation: bgMove 2s ease-in-out infinite alternate;
+  }
+  .triangle {
+    transform: rotate(60deg) scale(0.5);
+    opacity: 0;
+    transition: all 0.575s ease-in-out;
+  }
+  .phone {
+    opacity: 0;
+    transform: scale(0.4);
+    transition: all 0.575s ease-in-out 0.275s;
+  }
+  .line1{
+    transform: translateX(-30px);
+    opacity: 0;
+    transition: all 0.575s ease-in-out 0.675s;
+  }
+  .line2{
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.575s ease-in-out 0.675s;
+  }
+  .wifi {
+    opacity: 0;
+    transition: all 0.575s ease-in-out 0.575s;
+    .wifi1{
+      animation: wifiFadeInOut2 2s ease-in-out infinite alternate;
+    }
+    .wifi2{
+      animation: wifiFadeInOut 2s ease-in-out infinite alternate;
+      
+    }
+    .wifi3{
+    }
+  }
+  &.active {
+    opacity: 1;
+    .triangle{
+      transform: rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    .phone {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .line1{
+      opacity: 1;
+      transform: translateX(0px);
+    }
+    .line2{
+      opacity: 1;
+      transform: translateX(0px);
+    }
+    .wifi{
+      opacity: 1;
+    }
+  }
+}

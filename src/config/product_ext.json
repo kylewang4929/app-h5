@@ -1,0 +1,59 @@
+[
+  {
+    "categoryId": "socket",
+    "name": "舒味加热棒",
+    "en_name": "Heating Rod",
+    "productKey": "c6adaa249cf84d0ab96db5daa38622b0",
+    "productSecret": "4de0c05f3c634d989a6603d66314ed46",
+    "templateId": "com.gizwits.socket.1",
+    "templateVersion": "1.0.0",
+    "softAPSSIDPrefix": "XPG-GAgent-",
+    "scene": {
+      "featureList": [
+        {
+          "label": "POWER", "type": "Boolean", "dataPoint": "power"
+        }
+      ]
+    },
+    "moduleType": [0,8],
+    "airLink": {
+      "content" : [
+        {
+          "text": "接通设备电源",
+          "imageName": "Group120.png"
+        },
+        {
+          "text": "长按电源键3秒",
+          "imageName": "Group121.png"
+        },
+        {
+          "text": "确认指示灯快闪",
+          "tips": "每秒闪两次",
+          "imageName": "Group122.png"
+        }
+      ]
+    },
+    "softAp": {
+      "content" : [
+        {
+          "text": "接通设备电源",
+          "imageName": "Group120.png"
+        },
+        {
+          "text": "长按电源键3秒",
+          "imageName": "Group121.png"
+        },
+        {
+          "text": "确认指示灯快闪",
+          "tips": "每秒闪两次",
+          "imageName": "Group122.png"
+        },
+        {
+          "text": "再次长按电源键3秒",
+          "tips": "直到指示灯慢闪（每两秒一次）",
+          "imageName": "Group122.png"
+        }
+      ]
+    }
+  }
+]

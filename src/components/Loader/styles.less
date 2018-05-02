@@ -1,0 +1,53 @@
+.my-loader{
+
+    .reload {
+    display: none;
+    }
+
+    .reload.show {
+    margin-top: 20px;
+    display: inline-block;
+    }
+
+    circle,
+    polyline {
+    fill: none;
+    stroke-width: 6px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    }
+
+    .circle-bg {
+    stroke: #eee;
+    }
+
+    .circle-color {
+    stroke: #00c3ff;
+    stroke-dasharray: 380;
+    stroke-dashoffset: 380;
+    }
+
+    .check {
+    stroke: #00c3ff;
+    stroke-dasharray: 47;
+    stroke-dashoffset: -46;
+    }
+
+    .loading.isComplated .check {
+    stroke-dashoffset: 0;
+    transition: .5s;
+    }
+
+    .loading {
+    margin: 0 auto;
+    font-size: 124px;
+    width: 1em;
+    height: 1em;
+    }
+
+    .loading svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    }
+}

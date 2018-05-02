@@ -1,0 +1,30 @@
+[
+  {
+    "label": "CHINA",
+    "value": "+86"
+  },
+  {
+    "label": "JAPAN",
+    "value": "+81"
+  },
+  {
+    "label": "AMERICA",
+    "value": "+1"
+  },
+  {
+    "label": "CANADA",
+    "value": "+1"
+  },
+  {
+    "label": "UNITED_KIONGDOM",
+    "value": "+44"
+  },
+  {
+    "label": "FRANCE",
+    "value": "+33"
+  },
+  {
+    "label": "GERMANY",
+    "value": "+49"
+  }
+]

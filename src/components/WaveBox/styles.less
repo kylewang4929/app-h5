@@ -1,0 +1,44 @@
+.waveBox {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+    left: 0px;
+    top: 0px;
+	text-align: left;
+	cursor: pointer;
+	z-index: 100;
+    background-color: #fff;
+    overflow: hidden;
+
+    .morph-shape,
+    .morph-shape svg {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .morph-shape {
+        height: 0px;
+        -webkit-transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+        transition: height 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+        overflow: visible;
+    }
+
+    .morph-shape svg {
+        height: 100%;
+        overflow: visible;
+    }
+
+    &.menu--open .morph-shape {
+        height: 80%;
+    }
+
+    // &.menu--open .morph-shape svg path {
+    //     fill: #00c3ff;
+    // }
+
+    // .morph-shape svg path {
+    //     fill: #00c3ff;
+    // }
+}

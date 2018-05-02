@@ -1,0 +1,28 @@
+{
+  "globals": {
+    "location": true,
+    "window": true,
+    "cordova": true,
+    "document": true,
+    "device": true,
+    "navigator": true,
+    "localStorage": true,
+    "MobclickAgent": true,
+    "mina": true,
+    "WifiWizard": true,
+    "Connection": true,
+    "sessionStorage": true
+  },
+  "extends": "airbnb",
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/forbid-prop-types": [0],
+    "react/prefer-stateless-function": [0],
+    "jsx-a11y/no-static-element-interactions": [0],
+    "arrow-body-style": [0]
+  }
+}

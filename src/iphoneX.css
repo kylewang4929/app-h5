@@ -1,0 +1,67 @@
+@supports (top: env(safe-area-inset-top)) {
+  body {
+    --topNavBarHeight: 45px;
+    --bottomNavBarHeight:50px;
+    --scale: 1;
+  }
+  .am-navbar{
+    padding-top: calc(env(safe-area-inset-top) * (1 / var(--scale)))!important;
+  }
+  
+  .router-page {
+    padding-top: calc((env(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .router-page.has-tabbar{
+    padding-bottom: calc((var(--bottomNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .am-tab-bar-bar{
+    padding-bottom: calc(env(safe-area-inset-bottom) * (1 / var(--scale)))!important;
+    box-sizing: content-box!important;
+  }
+  .iphoneXSafePT {
+    padding-top: calc((env(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .safeAreaInsetPT {
+    padding-top: calc((env(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .safeAreaInsetPB {
+    padding-bottom: env(safe-area-inset-bottom)!important;
+  }
+  .giz-toast {
+    top: calc((env(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+}
+
+@supports (top: constant(safe-area-inset-top)) {
+  body {
+    --topNavBarHeight: 45px;
+    --bottomNavBarHeight: 50px;
+    --scale: 1;
+  }
+  .am-navbar{
+    padding-top: calc(constant(safe-area-inset-top) * (1 / var(--scale)))!important;
+  }
+  
+  .router-page {
+    padding-top: calc((constant(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .router-page.has-tabbar{
+    padding-bottom: calc((var(--bottomNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .am-tab-bar-bar{
+    padding-bottom: calc(constant(safe-area-inset-bottom) * (1 / var(--scale)))!important;
+    box-sizing: content-box!important;
+  }
+  .iphoneXSafePT {
+    padding-top: calc((constant(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .safeAreaInsetPT {
+    padding-top: calc((constant(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+  .safeAreaInsetPB {
+    padding-bottom: constant(safe-area-inset-bottom)!important;
+  }
+  .giz-toast {
+    top: calc((constant(safe-area-inset-top) + var(--topNavBarHeight)) * (1 / var(--scale)))!important;
+  }
+}
