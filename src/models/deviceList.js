@@ -76,7 +76,7 @@ export default {
   namespace: 'deviceList',
   state: {
     data: [
-      // { name: '加热棒', isShare: true, netStatus: 2, onlineStatus: false, mac: 'virtual:site', did: 'ZJNNvXFM2zutcVUj5ipPCC', productKey: 'c6adaa249cf84d0ab96db5daa38622b0' },
+      { name: '加热棒', isShare: true, netStatus: 2, onlineStatus: false, mac: 'virtual:site', did: 'ZJNNvXFM2zutcVUj5ipPCC', productKey: 'c6adaa249cf84d0ab96db5daa38622b0' },
       // { name: '球泡灯1', isShare: true, netStatus: 2, onlineStatus: false, mac: 'virtual:site01', did: 'ocBDy4uK4DSJCQ2wuMELjk', productKey: '1e4a02033d22420a8699c71bff4b6226' },
       // { name: '球泡灯2', isShare: true, netStatus: 1, onlineStatus: false, mac: 'virtual:site02', did: 'ocBDy4uK4DSJCQ2wuMELjk', productKey: '1e4a02033d22420a8699c71bff4b6226' },
       // { name: '采暖器', isShare: true, netStatus: 2, onlineStatus: false, mac: 'virtual:site03', did: 'ocBDy4uK4DSJCQ2wuMELjk', productKey: '80d83218504c42baa90dc41b605f5e56' },

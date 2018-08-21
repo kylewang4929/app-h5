@@ -8,6 +8,7 @@ import NavBar from '../containers/NavBar';
 import MenuPage from '../components/MenuPage';
 import { getLanguageString } from '../utils/getLanguage';
 import router from '../utils/router';
+import InfoAlert from '../components/InfoAlert';
 
 const logoImage = require('../assets/login_logo.png');
 
@@ -107,7 +108,7 @@ class ConfigWifi extends Component {
     status: 'start',
   };
   config = () => {
-    const { dispatch, configWifi } = this.props;
+    const { dispatch, configWifi, language } = this.props;
     const { SSID, password } = configWifi;
 
     this.setState({
@@ -129,6 +130,7 @@ class ConfigWifi extends Component {
           });
           // 一秒后跳回设备列表
           router.goBack(-2);
+          InfoAlert.show('配置成功，请选择要绑定的设备', 'success', 3000);
         },
         error: (err) => {
           this.setState({

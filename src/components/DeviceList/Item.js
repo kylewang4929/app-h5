@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { SwipeAction, Modal } from 'antd-mobile';
+import { formattingNum } from '../../utils/tool';
+
+import defaultDeviceData from '../../utils/defaultDeviceData';
 
 require('./defaultListStyles.less');
 const logo = require('../../assets/logo.png');
@@ -87,14 +90,14 @@ class Item extends Component {
 
   getDeviceData = () => {
     const { data, deviceData } = this.props;
-    return deviceData[data.did] || {};
+    return deviceData[data.did] || { data: defaultDeviceData };
   }
 
   render() {
     const { data, onDelete, onClick } = this.props;
     const deviceData = this.getDeviceData();
     const { Currtemp_Para, Settemp_Para, Resttime_Para } = deviceData.data;
-    const resttime = moment().second(Resttime_Para).format('MM:ss');
+    const resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
     return (
       <div className="z-depth-1" style={itemStyles.itemContainerBox}>
         <SwipeAction
@@ -126,7 +129,7 @@ class Item extends Component {
             {
               data.netStatus === 2 ? (
                 <div style={itemStyles.statusBar}>
-                  <ItemStatusBar icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para} unit="℃" />
+                  <ItemStatusBar icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para / 10} unit="℃" />
                   <ItemStatusBar icon="mdi mdi-history" label="时间" value={`-${resttime}`} unit="" border />
                   <ItemStatusBar icon="mdi mdi-oil-temperature" label="设置温度" value={Settemp_Para} unit="℃" />
                 </div>

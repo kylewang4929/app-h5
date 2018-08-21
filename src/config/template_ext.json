@@ -11,7 +11,7 @@
     "networkConfigType": ["AIR_LINK", "SOFT_AP"],
     "quickLogin": [
     ],
-    "cloudServiceInfo": null,
+    "cloudServiceInfo": "us",
     "enableScene": false,
     "enableGuide": false,
     "enableDeviceGroup": false

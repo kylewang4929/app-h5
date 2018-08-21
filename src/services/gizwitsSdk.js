@@ -112,7 +112,7 @@ export async function registerPhoneUser({ userName, password, verifyCode, accoun
 
 export async function setDeviceOnboarding({ ssid, key, mode, timeout, gagentTypes, softAPSSIDPrefix }) {
   // 配网要再增加一个自动绑定的操作
-  return CordovaRequest('GizWifiCordovaSDK', 'setDeviceOnboardingByBind', { ssid, key, mode, timeout, gagentTypes, softAPSSIDPrefix });
+  return CordovaRequest('GizWifiCordovaSDK', 'setDeviceOnboarding', { ssid, key, mode, timeout, gagentTypes, softAPSSIDPrefix });
 }
 
 export async function setDeviceOnboardingDeploy({ ssid, key, mode, timeout, gagentTypes, softAPSSIDPrefix }) {

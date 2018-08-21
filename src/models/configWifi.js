@@ -75,7 +75,7 @@ export default {
       localStorage.setItem('wifiData', JSON.stringify(wifiData));
       // 保存密码
 
-      const data = yield call(setDeviceOnboardingDeploy, { ssid, key, mode, timeout, gagentTypes, softAPSSIDPrefix });
+      const data = yield call(setDeviceOnboarding, { ssid, key, mode, timeout, gagentTypes, softAPSSIDPrefix });
 
       if (data.success) {
         payload.success(data.data);

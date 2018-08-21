@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import Slider from '../Slider';
+import { formattingNum } from '../../utils/tool';
 
 const logo = require('../../assets/logo.png');
 
@@ -115,8 +116,10 @@ class Item extends Component {
   render() {
     const { data } = this.props;
     const deviceData = this.getDeviceData();
+
     const { Currtemp_Para, Settemp_Para, Resttime_Para } = deviceData.data;
-    const resttime = moment().second(Resttime_Para).format('MM:ss');
+    const resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
+
 
     const flag = this.getFlag();
     return (
@@ -132,7 +135,7 @@ class Item extends Component {
             </div>
           </div>
           <div style={itemStyles.statusBar}>
-            <ItemStatusBar active icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para} unit="℃" />
+            <ItemStatusBar active icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para / 10} unit="℃" />
             <ItemStatusBar icon="mdi mdi-history" label="时间" value={`-${resttime}`} unit="" />
             <ItemStatusBar icon="mdi mdi-oil-temperature" label="设置温度" value={Settemp_Para} unit="℃" />
           </div>
@@ -140,6 +143,7 @@ class Item extends Component {
             min={0}
             max={90}
             value={Settemp_Para}
+            step={5}
             onChange={this.onChange}
             onAfterChange={this.onAfterChange}
           />
@@ -149,7 +153,7 @@ class Item extends Component {
   }
 }
 
-export const SliderItem = ({ value, onChange, onAfterChange, min, max, disableHandle }) => {
+export const SliderItem = ({ value, onChange, step = 1, onAfterChange, min, max, disableHandle }) => {
   return (
     <div style={itemStyles.sliderBox}>
       <span className="mdi mdi-minus" style={itemStyles.sliderBoxIcon} />
@@ -158,6 +162,7 @@ export const SliderItem = ({ value, onChange, onAfterChange, min, max, disableHa
           defaultValue={value}
           min={min}
           max={max}
+          step={step}
           onChange={onChange}
           onAfterChange={onAfterChange}
           disableHandle
