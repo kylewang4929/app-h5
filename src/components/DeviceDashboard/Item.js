@@ -101,16 +101,16 @@ class Item extends Component {
     });
   }
   getFlag = () => {
-    const deviceData = this.getDeviceData();
-    const { Busy_Type_Bit0, Busy_Type_Bit1, Busy_Flag } = deviceData.data;
-    if (Busy_Flag) {
-      if (Busy_Type_Bit0) {
-        return <div style={itemStyles.flagBox}><span style={itemStyles.flagIcon} className="mdi mdi-fire" />Heating</div>;
-      }
-      if (Busy_Type_Bit1) {
-        return <div style={itemStyles.flagBox}><span style={itemStyles.flagIcon} className="mdi mdi-cookie" />Cooking</div>;
-      }
-    }
+    // const deviceData = this.getDeviceData();
+    // const { Busy_Type_Bit0, Busy_Type_Bit1, Busy_Flag } = deviceData.data;
+    // if (Busy_Flag) {
+    //   if (Busy_Type_Bit0) {
+    //     return <div style={itemStyles.flagBox}><span style={itemStyles.flagIcon} className="mdi mdi-fire" />Heating</div>;
+    //   }
+    //   if (Busy_Type_Bit1) {
+    //     return <div style={itemStyles.flagBox}><span style={itemStyles.flagIcon} className="mdi mdi-cookie" />Cooking</div>;
+    //   }
+    // }
     return null;
   }
   render() {

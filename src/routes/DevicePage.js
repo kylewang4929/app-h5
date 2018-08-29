@@ -52,18 +52,18 @@ class DevicePage extends Component {
   }
   toggle = () => {
     const { dispatch, params: { did }, deviceData } = this.props;
-    const { Busy_Flag } = deviceData[did].data;
+    const { Start_Pause_Flag } = deviceData[did].data;
     dispatch({
       type: 'gizwitsSdk/sendCmd',
       payload: {
-        data: { Busy_Flag: !Busy_Flag },
+        data: { Start_Pause_Flag: !Start_Pause_Flag },
       },
     });
   }
   render() {
     const { deviceList: { data }, dispatch, params: { did }, deviceData } = this.props;
     const device = data.find(v => v.did === did);
-    const { Busy_Flag } = deviceData[did].data;
+    const { Start_Pause_Flag } = deviceData[did].data;
     return (
       <div>
         <NavBar
@@ -75,7 +75,7 @@ class DevicePage extends Component {
           <DeviceItem data={device} />
           <Timing onAdd={this.onAdd} onDelete={this.onDelete} deviceData={deviceData[did]} did={did} />
           <div style={styles.buttonBox}>
-            <Button style={styles.button} onClick={this.toggle}>{Busy_Flag ? 'Cancel' : 'Start'}</Button>
+            <Button style={styles.button} onClick={this.toggle}>{Start_Pause_Flag ? 'Pause' : 'Start'}</Button>
           </div>
         </MenuPage>
       </div>

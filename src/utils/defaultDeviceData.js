@@ -20,4 +20,5 @@ export default {
   HoldTemp_Para: 20,
   Busy_Type_Bit0: true,
   Busy_Type_Bit1: true,
+
 };
