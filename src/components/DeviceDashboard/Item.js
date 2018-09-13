@@ -84,21 +84,65 @@ const itemStyles = {
     position: 'relative',
     top: '0.02rem',
   },
+  title: {
+    fontSize: '0.26rem',
+    padding: '0.2rem 0.24rem 0.1rem 0.24rem',
+  },
 };
 class Item extends Component {
-  getDeviceData = () => {
-    const { data, deviceData } = this.props;
+  state = {
+    select: 'time',
+  };
+  componentDidMount() {
+    const deviceData = this.getDeviceData();
+    const { Settemp_Para, Settime_Para } = deviceData.data;
+    this.setState({
+      Settemp_Para,
+      Settime_Para,
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    const deviceData = this.getDeviceData().data;
+    const newDeviceData = this.getDeviceData(nextProps).data;
+    if (deviceData.Settemp_Para !== newDeviceData.Settemp_Para) {
+      this.setState({
+        Settemp_Para: newDeviceData.Settemp_Para,
+      });
+    }
+    if (deviceData.Settime_Para !== newDeviceData.Settime_Para) {
+      this.setState({
+        Settime_Para: newDeviceData.Settime_Para,
+      });
+    }
+  }
+  getDeviceData = (props) => {
+    const { data, deviceData } = props || this.props;
     return deviceData[data.did] || {};
   }
   onAfterChange = (value) => {
     // 发送数据点
     const { dispatch } = this.props;
+    const cmd = {};
+    if (this.state.select === 'time') {
+      cmd.Settime_Para = value;
+    } else {
+      cmd.Settemp_Para = value;
+    }
     dispatch({
       type: 'gizwitsSdk/sendCmd',
       payload: {
-        data: { Settemp_Para: value },
+        data: cmd,
       },
     });
+  }
+  onChange = (value) => {
+    const cmd = {};
+    if (this.state.select === 'time') {
+      cmd.Settime_Para = value;
+    } else {
+      cmd.Settemp_Para = value;
+    }
+    this.setState(cmd);
   }
   getFlag = () => {
     const deviceData = this.getDeviceData();
@@ -115,11 +159,11 @@ class Item extends Component {
   }
   render() {
     const { data } = this.props;
+    const { select, Settemp_Para, Settime_Para } = this.state;
     const deviceData = this.getDeviceData();
 
-    const { Currtemp_Para, Settemp_Para, Resttime_Para } = deviceData.data;
-    const resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
-
+    const { Currtemp_Para } = deviceData.data;
+    const resttime = `${formattingNum(parseInt(Settime_Para / 60))}:${formattingNum(parseInt(Settime_Para % 60))}`;
 
     const flag = this.getFlag();
     return (
@@ -136,17 +180,45 @@ class Item extends Component {
           </div>
           <div style={itemStyles.statusBar}>
             <ItemStatusBar active icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para / 10} unit="℃" />
-            <ItemStatusBar icon="mdi mdi-history" label="时间" value={`-${resttime}`} unit="" />
-            <ItemStatusBar icon="mdi mdi-oil-temperature" label="设置温度" value={Settemp_Para} unit="℃" />
+            <ItemStatusBar
+              // active={select === 'time'}
+              icon="mdi mdi-history"
+              onClick={() => { this.setState({ select: 'time' }); }}
+              label="时间"
+              value={`-${resttime}`} unit=""
+            />
+            <ItemStatusBar
+              // active={select === 'temp'}
+              icon="mdi mdi-oil-temperature"
+              onClick={() => { this.setState({ select: 'temp' }); }}
+              label="设置温度" value={Settemp_Para} unit="℃"
+            />
           </div>
-          <SliderItem
-            min={0}
-            max={90}
-            value={Settemp_Para}
-            step={5}
-            onChange={this.onChange}
-            onAfterChange={this.onAfterChange}
-          />
+          <div style={itemStyles.title}>
+            {
+              select === 'time' ? '设置时间' : '设置温度'
+            }
+          </div>
+          {
+            select === 'time' ? <SliderItem
+              min={0}
+              max={180}
+              value={Settime_Para}
+              step={1}
+              onChange={this.onChange}
+              onAfterChange={this.onAfterChange}
+            /> : null
+          }
+          {
+            select === 'temp' ? <SliderItem
+              min={0}
+              max={90}
+              value={Settemp_Para}
+              step={5}
+              onChange={this.onChange}
+              onAfterChange={this.onAfterChange}
+            /> : null
+          }
         </div>
       </div>
     );
@@ -156,10 +228,16 @@ class Item extends Component {
 export const SliderItem = ({ value, onChange, step = 1, onAfterChange, min, max, disableHandle }) => {
   return (
     <div style={itemStyles.sliderBox}>
-      <span className="mdi mdi-minus" style={itemStyles.sliderBoxIcon} />
+      <span
+        className="mdi mdi-minus" style={itemStyles.sliderBoxIcon} onClick={() => {
+          if (value - step >= min) {
+            onAfterChange(value - step);
+          }
+        }}
+      />
       <div style={itemStyles.slider}>
         <Slider
-          defaultValue={value}
+          value={value}
           min={min}
           max={max}
           step={step}
@@ -168,7 +246,13 @@ export const SliderItem = ({ value, onChange, step = 1, onAfterChange, min, max,
           disableHandle
         />
       </div>
-      <span className="mdi mdi-plus" style={itemStyles.sliderBoxIcon} />
+      <span
+        className="mdi mdi-plus" style={itemStyles.sliderBoxIcon} onClick={() => {
+          if (value + step <= max) {
+            onAfterChange(value + step);
+          }
+        }}
+      />
     </div>
   );
 };
@@ -238,9 +322,9 @@ const statusBarStyles = {
 
 class ItemStatusBar extends Component {
   render() {
-    const { icon, unit, value, label, border, active } = this.props;
+    const { icon, unit, value, label, border, active, onClick } = this.props;
     return (
-      <div style={statusBarStyles.item}>
+      <div style={statusBarStyles.item} onClick={onClick}>
         {
           active ? (
             <div>
