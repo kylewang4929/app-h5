@@ -69,15 +69,17 @@ class SettingItem extends Component {
         <div style={styles.label}>Phase {data.index + 1}</div>
         <SliderBox
           onChange={this.onTempChange}
+          onAfterChange={this.onTempChange}
           value={data.temp}
           valueText={data.temp}
-          unit={'°F'}
+          unit={'°C'}
           label="Temperature" border
           min={0}
           max={100}
         />
         <SliderBox
           onChange={this.onTimeChange}
+          onAfterChange={this.onTimeChange}
           value={data.time}
           valueText={`${this.formattingNum(parseInt(data.time / 60))}:${this.formattingNum(data.time % 60)}`}
           label="Time"
@@ -94,14 +96,14 @@ SettingItem.defaultProps = {
   onTimeChange: () => {},
 };
 
-const SliderBox = ({ border, label, value, valueText, unit, onChange, min, max }) => {
+const SliderBox = ({ border, label, value, valueText, unit, onChange, min, max, onAfterChange }) => {
   return (
     <div style={{ ...styles.sliderBox, ...border ? styles.border : {} }}>
       <div style={styles.sliderTitle}>
         <div style={styles.sliderLabel}>{label}</div>
         <div style={styles.sliderValue}>{valueText}<span style={styles.sliderUnit}>{unit}</span></div>
       </div>
-      <SliderItem disableHandle min={min} max={max} onChange={onChange} value={value} />
+      <SliderItem disableHandle min={min} max={max} onAfterChange={onAfterChange} onChange={onChange} value={value} />
     </div>
   );
 };
