@@ -51,9 +51,12 @@ class SettingItem extends Component {
     return (Array(2).join(0) + num).slice(-2);
   }
   onTempChange = (value) => {
+    // 小数点是0.1
+    value = parseFloat(value);
+    value = value.toFixed(1);
     const { onChange } = this.props;
     const { data } = this.props;
-    data.temp = value;
+    data.temp = parseFloat(value);
     onChange(data);
   }
   onTimeChange = (value) => {
@@ -69,19 +72,24 @@ class SettingItem extends Component {
         <div style={styles.label}>Phase {data.index + 1}</div>
         <SliderBox
           onChange={this.onTempChange}
+          onAfterChange={this.onTempChange}
           value={data.temp}
           valueText={data.temp}
-          unit={'°F'}
-          label="Temperature" border
-          min={0}
-          max={100}
+          unit={'°C'}
+          label="Temperature"
+          border
+          min={32}
+          step={0.1}
+          max={90}
         />
         <SliderBox
           onChange={this.onTimeChange}
+          onAfterChange={this.onTimeChange}
           value={data.time}
           valueText={`${this.formattingNum(parseInt(data.time / 60))}:${this.formattingNum(data.time % 60)}`}
           label="Time"
           min={0}
+          step={1}
           max={600}
         />
       </div>
@@ -94,14 +102,14 @@ SettingItem.defaultProps = {
   onTimeChange: () => {},
 };
 
-const SliderBox = ({ border, label, value, valueText, unit, onChange, min, max }) => {
+const SliderBox = ({ border, label, value, valueText, unit, onChange, min, max, onAfterChange, step }) => {
   return (
     <div style={{ ...styles.sliderBox, ...border ? styles.border : {} }}>
       <div style={styles.sliderTitle}>
         <div style={styles.sliderLabel}>{label}</div>
         <div style={styles.sliderValue}>{valueText}<span style={styles.sliderUnit}>{unit}</span></div>
       </div>
-      <SliderItem disableHandle min={min} max={max} onChange={onChange} value={value} />
+      <SliderItem step={step} disableHandle min={min} max={max} onAfterChange={onAfterChange} onChange={onChange} value={value} />
     </div>
   );
 };

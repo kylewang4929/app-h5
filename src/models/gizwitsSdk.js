@@ -57,12 +57,16 @@ export default {
       let appSecret = '';
 
       // 判断平台
-      if (device.platform === 'Android') {
-        appID = gizwitsConfig.androidAppID;
-        appSecret = gizwitsConfig.androidAppSecret;
-      } else {
-        appID = gizwitsConfig.iosAppID;
-        appSecret = gizwitsConfig.iosAppSecret;
+      try {
+        if (device.platform === 'Android') {
+          appID = gizwitsConfig.androidAppID;
+          appSecret = gizwitsConfig.androidAppSecret;
+        } else {
+          appID = gizwitsConfig.iosAppID;
+          appSecret = gizwitsConfig.iosAppSecret;
+        }
+      } catch (error) {
+
       }
       const data = yield call(init, {
         appID,
@@ -126,6 +130,10 @@ export default {
       }
     },
     * templateSendCmd({ payload }, { put, select }) {
+      /**
+       * 本版本中 废弃这个方法
+       */
+
       const { data, device } = payload;
       // 做一个判断，如果当前activeDevice 是分组的话则调用分组的api
       const activeDevice = yield select(state => state.deviceList.activeDevice);
@@ -166,6 +174,12 @@ export default {
     * sendCmd({ payload }, { put, select }) {
       const { data } = payload;
       const device = yield select(state => state.deviceList.activeDevice);
+
+      // 发送的指令带有Settemp_Para的时候需要转换 * 10
+      if (data.Settemp_Para) {
+        data.Settemp_Para *= 10;
+      }
+
       write({ device, data });
       /**
        * 发送完指令后，设置一个十秒的延时，如果此时设备还是没有上报数据的话，提示用户可能离线

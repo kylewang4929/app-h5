@@ -85,9 +85,13 @@ export default {
        * 收到设备上报的内容，更新本地存储，标记已经收到设备回复
        */
 
+      // 如果带有Settemp_Para的时候 需要转换 / 10
+
       const { payload } = action;
       const { alerts, faults, data, device } = payload;
-      console.log(data);
+      if (data.Settemp_Para) {
+        data.Settemp_Para /= 10;
+      }
       let obj = {};
       if (device.length > 0) {
         // 数组格式
