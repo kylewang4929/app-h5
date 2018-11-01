@@ -354,5 +354,11 @@
   "HEATING_RODS": "Heating rods",
   "FAHRENHEIT": "Fahrenheit",
   "C_UNIT": "C",
-  "UNIT": "Unit"
+  "UNIT": "Unit",
+  "START": "Start",
+  "PAUSE": "Pause",
+  "ADVANCED_SETTING": "Advanced Setting",
+  "ADD": "Add",
+  "BREAK_THE_COOKING_CYCLE_INTO_MUITIPLE_PHASES": "Break the cooking cycle into muitiple phases",
+  "PHASE": "Phase"
 }

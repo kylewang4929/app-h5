@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SwipeAction } from 'antd-mobile';
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   container: {
@@ -78,13 +79,15 @@ export const AddItem = ({ onAdd }) => {
     <div style={styles.addItem} className="z-depth-1">
       <div style={styles.addItemTitleBox}>
         <span style={styles.addItemTitle}>
-              Advanced Setting
-            </span>
+          <FormattedMessage id="ADVANCED_SETTING" />
+        </span>
         <span style={styles.addItemTips}>
-              Break the cooking cycle into muitiple phases
-            </span>
+          <FormattedMessage id="BREAK_THE_COOKING_CYCLE_INTO_MUITIPLE_PHASES" />
+        </span>
       </div>
-      <div onClick={onAdd} style={styles.addItemRightText}>Add phase</div>
+      <div onClick={onAdd} style={styles.addItemRightText}>
+        <FormattedMessage id="ADD" />
+      </div>
     </div>
   );
 };
@@ -145,7 +148,7 @@ class Item extends Component {
           autoClose
           right={[
             {
-              text: <div style={itemStyles.at}>删除</div>,
+              text: <div style={itemStyles.at}><FormattedMessage id="DELETE" /></div>,
               onPress: () => onDelete(data),
               style: itemStyles.delete,
             },
@@ -153,7 +156,7 @@ class Item extends Component {
         >
           <div style={itemStyles.containerInner}>
             <span style={itemStyles.title}>
-              phase {data.index + 1}
+              <FormattedMessage id="PHASE" /> {data.index + 1}
             </span>
             <ValueItem icon="oil-temperature" value={data.temp} unit="℃" />
             <ValueItem icon="history" value={`-${this.formattingNum(parseInt(data.time / 60))}:${this.formattingNum(data.time % 60)}`} unit="" />

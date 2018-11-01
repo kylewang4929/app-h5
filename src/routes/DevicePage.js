@@ -9,6 +9,7 @@ import Timing from '../components/DeviceDashboard/Timing';
 import router from '../utils/router';
 import BackButton from '../containers/MenuButton/BackButton';
 import DeviceMoreButton from '../containers/MenuButton/DeviceMoreButton';
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   container: {
@@ -75,7 +76,11 @@ class DevicePage extends Component {
           <DeviceItem data={device} />
           <Timing onAdd={this.onAdd} onDelete={this.onDelete} deviceData={deviceData[did]} did={did} />
           <div style={styles.buttonBox}>
-            <Button style={styles.button} onClick={this.toggle}>{flag ? 'Pause' : 'Start'}</Button>
+            <Button style={styles.button} onClick={this.toggle}>
+              {
+              flag ? <FormattedMessage id="PAUSE" /> : <FormattedMessage id="START" />
+              }
+            </Button>
           </div>
         </MenuPage>
       </div>

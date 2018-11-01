@@ -355,5 +355,11 @@
   "HEATING_RODS": "加热棒",
   "FAHRENHEIT": "华氏度",
   "C_UNIT": "摄氏度",
-  "UNIT": "单位"
+  "UNIT": "单位",
+  "START": "开始",
+  "PAUSE": "暂停",
+  "ADVANCED_SETTING": "高级设置",
+  "ADD": "增加",
+  "BREAK_THE_COOKING_CYCLE_INTO_MUITIPLE_PHASES": "把烹饪周期分成多个阶段",
+  "PHASE": "阶段"
 }

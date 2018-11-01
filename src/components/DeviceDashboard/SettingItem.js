@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 
 import { SliderItem } from './Item';
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   container: {
@@ -69,14 +70,14 @@ class SettingItem extends Component {
     const { data, min, max, unit } = this.props;
     return (
       <div className="z-depth-1" style={styles.container}>
-        <div style={styles.label}>Phase {data.index + 1}</div>
+        <div style={styles.label}><FormattedMessage id="PHASE" /> {data.index + 1}</div>
         <SliderBox
           onChange={this.onTempChange}
           onAfterChange={this.onTempChange}
           value={data.temp}
           valueText={data.temp}
           unit={unit}
-          label="Temperature"
+          label={<FormattedMessage id="TEMPERATURE" />}
           border
           min={min}
           step={0.1}
@@ -87,7 +88,7 @@ class SettingItem extends Component {
           onAfterChange={this.onTimeChange}
           value={data.time}
           valueText={`${this.formattingNum(parseInt(data.time / 60))}:${this.formattingNum(data.time % 60)}`}
-          label="Time"
+          label={<FormattedMessage id="TIME" />}
           min={0}
           step={1}
           max={600}
