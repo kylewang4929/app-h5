@@ -111,7 +111,6 @@ class SetTiming extends Component {
 
     const { min, max } = getScale(Unit_Flag);
     const unitText = getUnitText(Unit_Flag);
-
     return (
       <div>
         <NavBar

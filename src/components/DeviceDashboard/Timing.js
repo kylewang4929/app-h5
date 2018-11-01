@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SwipeAction } from 'antd-mobile';
 import { FormattedMessage } from 'react-intl';
+import { getUnitText } from '../../utils/getUnit';
 
 const styles = {
   container: {
@@ -57,13 +58,14 @@ class List extends Component {
   }
   render() {
     const { deviceData, onDelete, onAdd } = this.props;
-    const { Cook_Para, Cookstage_Para } = deviceData.data;
+    const { Cook_Para, Cookstage_Para, Unit_Flag } = deviceData.data;
     const data = this.getTiming(Cook_Para, Cookstage_Para);
+    const unit = getUnitText(Unit_Flag);
     return (
       <div style={styles.container}>
         {
           data.map((item, index) => {
-            return <Item onDelete={onDelete} key={index} data={item} />;
+            return <Item onDelete={onDelete} key={index} data={item} unit={unit} />;
           })
         }
         {
@@ -141,7 +143,7 @@ class Item extends Component {
     return (Array(2).join(0) + num).slice(-2);
   }
   render() {
-    const { onDelete, data } = this.props;
+    const { onDelete, data, unit } = this.props;
     return (
       <div className="z-depth-1" style={itemStyles.container}>
         <SwipeAction
@@ -158,7 +160,7 @@ class Item extends Component {
             <span style={itemStyles.title}>
               <FormattedMessage id="PHASE" /> {data.index + 1}
             </span>
-            <ValueItem icon="oil-temperature" value={data.temp} unit="℃" />
+            <ValueItem icon="oil-temperature" value={data.temp} unit={unit} />
             <ValueItem icon="history" value={`-${this.formattingNum(parseInt(data.time / 60))}:${this.formattingNum(data.time % 60)}`} unit="" />
           </div>
         </SwipeAction>
