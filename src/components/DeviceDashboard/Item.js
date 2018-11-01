@@ -104,6 +104,8 @@ class Item extends Component {
   componentWillReceiveProps(nextProps) {
     const deviceData = this.getDeviceData().data;
     const newDeviceData = this.getDeviceData(nextProps).data;
+    console.log('deviceData', deviceData.Settemp_Para);
+    console.log('newDeviceData', newDeviceData.Settemp_Para);
     if (deviceData.Settemp_Para !== newDeviceData.Settemp_Para) {
       this.setState({
         Settemp_Para: newDeviceData.Settemp_Para,
@@ -116,6 +118,7 @@ class Item extends Component {
     }
   }
   getDeviceData = (props) => {
+    console.log('props', props);
     const { data, deviceData } = props || this.props;
     return deviceData[data.did] || {};
   }
@@ -126,7 +129,8 @@ class Item extends Component {
     if (this.state.select === 'time') {
       cmd.Settime_Para = value;
     } else {
-      cmd.Settemp_Para = value;
+      value = value.toFixed(1);
+      cmd.Settemp_Para = parseFloat(value);
     }
     dispatch({
       type: 'gizwitsSdk/sendCmd',
@@ -166,6 +170,7 @@ class Item extends Component {
     const resttime = `${formattingNum(parseInt(Settime_Para / 60))}:${formattingNum(parseInt(Settime_Para % 60))}`;
 
     const flag = this.getFlag();
+
     return (
       <div className="z-depth-1" style={itemStyles.itemContainerBox}>
         <div style={itemStyles.containerInner}>
@@ -211,10 +216,10 @@ class Item extends Component {
           }
           {
             select === 'temp' ? <SliderItem
-              min={0}
+              min={32}
               max={90}
               value={Settemp_Para}
-              step={5}
+              step={0.1}
               onChange={this.onChange}
               onAfterChange={this.onAfterChange}
             /> : null
@@ -231,6 +236,7 @@ export const SliderItem = ({ value, onChange, step = 1, onAfterChange, min, max,
       <span
         className="mdi mdi-minus" style={itemStyles.sliderBoxIcon} onClick={() => {
           if (value - step >= min) {
+            value = parseFloat(value);
             onAfterChange(value - step);
           }
         }}
@@ -249,6 +255,7 @@ export const SliderItem = ({ value, onChange, step = 1, onAfterChange, min, max,
       <span
         className="mdi mdi-plus" style={itemStyles.sliderBoxIcon} onClick={() => {
           if (value + step <= max) {
+            value = parseFloat(value);
             onAfterChange(value + step);
           }
         }}

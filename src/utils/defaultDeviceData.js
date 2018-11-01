@@ -1,7 +1,7 @@
 export default {
   Unit_Flag: false,
   Busy_Flag: true,
-  Settemp_Para: 30,
+  Settemp_Para: 34.1,
   Settime_Para: 100,
   Currtemp_Para: 20,
   Resttime_Para: 200,

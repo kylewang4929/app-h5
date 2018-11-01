@@ -87,7 +87,7 @@ export default {
       // { name: '采暖器', dev_alias: '采暖器', isBind: false, netStatus: 2, onlineStatus: false, mac: 'virtual:site03', did: 'x8eLRSm8Mr3LyhJzwrcQn3', productKey: '63a7a2e85b154432b720573874416e1f' },
     ],
     activeDevice: {
-      did: 'ZJNNvXFM2zutcVUj5ipPCC',
+      did: '',
       groupID: '',
     }, // 标记当前激活的did
     isDefault: true,
