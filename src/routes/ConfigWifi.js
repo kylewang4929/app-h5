@@ -124,13 +124,13 @@ class ConfigWifi extends Component {
         timeout: 60,
         gagentTypes: [0, 8],
         success: (data) => {
-          console.log('配网成功', data);
           this.setState({
             status: 'success',
           });
           // 一秒后跳回设备列表
           router.goBack(-2);
-          InfoAlert.show('配置成功，请选择要绑定的设备', 'success', 3000);
+          const CON_IS_SUCCESSFUL_CHOOSE_DEVICE = getLanguageString(language.key, 'CON_IS_SUCCESSFUL_CHOOSE_DEVICE');
+          InfoAlert.show(CON_IS_SUCCESSFUL_CHOOSE_DEVICE, 'success', 3000);
         },
         error: (err) => {
           this.setState({
@@ -160,7 +160,7 @@ class ConfigWifi extends Component {
                   <img src={logoImage} style={styles.headerImage} />
                 </div>
                 <div style={styles.tips}>
-                  请按下设备配网按键，黄灯闪烁表示设备已经进入配置模式，此时请点击“开始配置”。
+                  <FormattedMessage id="PRESS_THE_DEVICE_CONFIGURATION_BUTTON" />
                 </div>
                 <Button
                   style={{ ...styles.button }}
@@ -168,7 +168,7 @@ class ConfigWifi extends Component {
                   className="btn"
                   type="primary"
                 >
-                  <FormattedMessage id="开始配置" />
+                  <FormattedMessage id="START_CONFIG" />
                 </Button>
               </div>
             ) : null
@@ -179,7 +179,7 @@ class ConfigWifi extends Component {
               <div style={styles.box}>
                 <div style={styles.loadingBox}>
                   <ReactLoading className="my-react-loading" type="bubbles" color="rgb(2, 196, 177)" delay={0} />
-                  设备配置中，请耐心等待...
+                  <FormattedMessage id="PLEASE_WAIT_FOR_THE_DEVICE_CONFIGURATION" />
                 </div>
               </div>
             ) : null
@@ -191,7 +191,7 @@ class ConfigWifi extends Component {
                 <div style={styles.successIcon}>
                   <span className="mdi mdi-check" />
                 </div>
-                <div style={styles.iconText}>配置成功</div>
+                <div style={styles.iconText}><FormattedMessage id="CON_IS_SUCCESSFUL" /></div>
               </div>
             ) : null
           }
@@ -202,20 +202,20 @@ class ConfigWifi extends Component {
                 <div style={styles.errorIcon}>
                   <span className="mdi mdi-close" />
                 </div>
-                <div style={styles.iconText}>配置失败</div>
+                <div style={styles.iconText}><FormattedMessage id="CONFIGURATION_FAILED" /></div>
                 <div style={styles.errorContent}>
-                  <div style={styles.errorTitle}>配置失败了，让我们看看可能哪里出了错：</div>
+                  <div style={styles.errorTitle}><FormattedMessage id="CONFIGURATION_FAIL_TIPS" /></div>
                   <div style={styles.list}>
                     <div style={styles.item}>
                       <span style={styles.itemPoint} />
-                      设备是否正常运行？
+                      <FormattedMessage id="CONFIGURATION_FAIL_TIPS" />
                     </div>
                     <div style={styles.item}>
                       <span style={styles.itemPoint} />
-                      Wi-Fi网络是否连接顺畅？
+                      <FormattedMessage id="IS_THE_WIFI_NETWORK_WELL_CONNECTED" />
                     </div>
                   </div>
-                  <div style={styles.errorTitle}>请拔下电源，再重新接通电源，再点击重试</div>
+                  <div style={styles.errorTitle}><FormattedMessage id="UNPLUG_THE_POWER_TIPS" /></div>
                 </div>
                 <Button
                   style={{ ...styles.button }}
@@ -223,7 +223,7 @@ class ConfigWifi extends Component {
                   className="btn"
                   type="primary"
                 >
-                  <FormattedMessage id="我要重试" />
+                  <FormattedMessage id="RETRY" />
                 </Button>
               </div>
             ) : null

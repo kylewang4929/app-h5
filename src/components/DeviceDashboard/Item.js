@@ -3,6 +3,8 @@ import { connect } from 'dva';
 import moment from 'moment';
 import Slider from '../Slider';
 import { formattingNum } from '../../utils/tool';
+import { getUnitText, getScale } from '../../utils/getUnit';
+import { FormattedMessage } from 'react-intl';
 
 const logo = require('../../assets/logo.png');
 
@@ -165,12 +167,12 @@ class Item extends Component {
     const { data } = this.props;
     const { select, Settemp_Para, Settime_Para } = this.state;
     const deviceData = this.getDeviceData();
-
-    const { Currtemp_Para } = deviceData.data;
+    console.log('deviceData', deviceData);
+    const { Currtemp_Para, Unit_Flag } = deviceData.data;
     const resttime = `${formattingNum(parseInt(Settime_Para / 60))}:${formattingNum(parseInt(Settime_Para % 60))}`;
 
     const flag = this.getFlag();
-
+    const { min, max } = getScale(Unit_Flag);
     return (
       <div className="z-depth-1" style={itemStyles.itemContainerBox}>
         <div style={itemStyles.containerInner}>
@@ -184,24 +186,24 @@ class Item extends Component {
             </div>
           </div>
           <div style={itemStyles.statusBar}>
-            <ItemStatusBar active icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para / 10} unit="℃" />
+            <ItemStatusBar active icon="mdi mdi-oil-temperature" label={<FormattedMessage id="CURRENT_TEMP" />} value={Currtemp_Para / 10} unit={getUnitText(Unit_Flag)} />
             <ItemStatusBar
               // active={select === 'time'}
               icon="mdi mdi-history"
               onClick={() => { this.setState({ select: 'time' }); }}
-              label="时间"
+              label={<FormattedMessage id="TIME" />}
               value={`-${resttime}`} unit=""
             />
             <ItemStatusBar
               // active={select === 'temp'}
               icon="mdi mdi-oil-temperature"
               onClick={() => { this.setState({ select: 'temp' }); }}
-              label="设置温度" value={Settemp_Para} unit="℃"
+              label={<FormattedMessage id="SET_TEMP" />} value={Settemp_Para} unit={getUnitText(Unit_Flag)}
             />
           </div>
           <div style={itemStyles.title}>
             {
-              select === 'time' ? '设置时间' : '设置温度'
+              select === 'time' ? <FormattedMessage id="SET_TIME" /> : <FormattedMessage id="SET_TEMP" />
             }
           </div>
           {
@@ -216,8 +218,8 @@ class Item extends Component {
           }
           {
             select === 'temp' ? <SliderItem
-              min={32}
-              max={90}
+              min={min}
+              max={max}
               value={Settemp_Para}
               step={0.1}
               onChange={this.onChange}

@@ -66,7 +66,7 @@ class SettingItem extends Component {
     onChange(data);
   }
   render() {
-    const { data, onChange } = this.props;
+    const { data, min, max, unit } = this.props;
     return (
       <div className="z-depth-1" style={styles.container}>
         <div style={styles.label}>Phase {data.index + 1}</div>
@@ -75,12 +75,12 @@ class SettingItem extends Component {
           onAfterChange={this.onTempChange}
           value={data.temp}
           valueText={data.temp}
-          unit={'°C'}
+          unit={unit}
           label="Temperature"
           border
-          min={32}
+          min={min}
           step={0.1}
-          max={90}
+          max={max}
         />
         <SliderBox
           onChange={this.onTimeChange}

@@ -162,7 +162,7 @@ class SearchDevice extends Component {
             loading ? (
               <div style={styles.stateBox}>
                 <ReactLoading className="my-react-loading" type="bubbles" color="#80c7e8" delay={0} />
-                正在为您搜索设备...
+                <FormattedMessage id="SERCHING_DEVICE" />
               </div>
             ) : null
           }
@@ -170,9 +170,9 @@ class SearchDevice extends Component {
           {
             !loading && data.length === 0 ? (
               <div style={styles.stateBox}>
-                当前网络没有已经配置的设备
+                <FormattedMessage id="NET_WORK_NO_DEVICE" />
                 <br />
-                请确定是否和设备在同一局域网
+                <FormattedMessage id="SURE_IN_THE_SAME_NETWORK" />
               </div>
             ) : null
           }
@@ -183,11 +183,11 @@ class SearchDevice extends Component {
                   data.map((item, index) => {
                     return (
                       <Item
-                          key={index}
-                          thumb={deviceIcon}
-                          arrow="horizontal"
-                          onClick={this.bindDevice.bind(null, item)}
-                        >{item.dev_alias || '加热棒'}</Item>
+                        key={index}
+                        thumb={deviceIcon}
+                        arrow="horizontal"
+                        onClick={this.bindDevice.bind(null, item)}
+                      >{item.dev_alias || <FormattedMessage id="HEATING_RODS" />}</Item>
                     );
                   })
                 }
@@ -197,7 +197,7 @@ class SearchDevice extends Component {
 
           <div style={styles.buttonBox}>
             <Button onClick={this.config} style={{ ...styles.button }} type="primary">
-              <FormattedMessage id="我要配置新设备" />
+              <FormattedMessage id="CONFIG_NEW_DEVICE" />
             </Button>
           </div>
         </MenuPage>

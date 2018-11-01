@@ -9,6 +9,7 @@ import CommonButton from '../containers/MenuButton/CommonButton';
 import SettingItem from '../components/DeviceDashboard/SettingItem';
 import { AddItem } from '../components/DeviceDashboard/Timing';
 import router from '../utils/router';
+import { getScale, getUnitText } from '../utils/getUnit';
 
 const styles = {
   container: {
@@ -57,7 +58,7 @@ class SetTiming extends Component {
     const { data } = this.state;
     data.push({
       index: data.length,
-      temp: 30,
+      temp: 32,
       time: 60,
     });
     this.setState({
@@ -103,8 +104,14 @@ class SetTiming extends Component {
   }
 
   render() {
-    const { deviceList: { data }, params: { did } } = this.props;
+    const { deviceList: { data }, params: { did }, deviceData } = this.props;
     const device = data.find(v => v.did === did);
+
+    const { Unit_Flag } = deviceData[did].data;
+
+    const { min, max } = getScale(Unit_Flag);
+    const unitText = getUnitText(Unit_Flag);
+
     return (
       <div>
         <NavBar
@@ -125,6 +132,9 @@ class SetTiming extends Component {
                     onChange={this.onChange}
                     key={index}
                     data={item}
+                    min={min}
+                    max={max}
+                    unit={unitText}
                   />
                 );
               })

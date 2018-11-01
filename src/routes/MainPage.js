@@ -9,6 +9,7 @@ import router from '../utils/router';
 import DeviceList from '../containers/DeviceList';
 import SearchContain from '../containers/SearchContain';
 import Columns from '../containers/Columns';
+import { FormattedMessage } from 'react-intl';
 
 const styles = {
   container: {
@@ -39,7 +40,7 @@ class MainPage extends Component {
     return (
       <div>
         <NavBar
-          title="设备列表"
+          title={<FormattedMessage id="DEVICE_LIST" />}
           leftButton={this.leftButton}
           rightButton={<AddDeviceButton />}
         />

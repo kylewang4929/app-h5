@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import BackButton from '../containers/MenuButton/BackButton';
 import NavBar from '../containers/NavBar';
 import MenuPage from '../components/MenuPage';
+import { getLanguageString } from '../utils/getLanguage';
 
 const Item = List.Item;
 
@@ -27,11 +28,16 @@ const deviceIcon = require('../assets/logo.png');
 
 class DeviceMore extends Component {
   rename = (data) => {
-    Modal.prompt('重命名', null,
+    const { language } = this.props;
+
+    const CANCEL = getLanguageString(language.key, 'CANCEL');
+    const CONFIRM = getLanguageString(language.key, 'CONFIRM');
+    const RENAME = getLanguageString(language.key, 'RENAME');
+    Modal.prompt(RENAME, null,
       [
-        { text: '取消' },
+        { text: CANCEL },
         {
-          text: '确认',
+          text: CONFIRM,
           onPress: (value) => {
             const { dispatch } = this.props;
             dispatch({
@@ -43,10 +49,15 @@ class DeviceMore extends Component {
       ], 'default', data.name);
   }
   delete = (data) => {
-    const { dispatch } = this.props;
-    Modal.alert('解绑设备', '确定要解绑设备吗?', [
-      { text: '取消', onPress: () => console.log('cancel') },
-      { text: '确定',
+    const { dispatch, language } = this.props;
+    const DELETE_DEVICE = getLanguageString(language.key, 'DELETE_DEVICE');
+    const CANCEL = getLanguageString(language.key, 'CANCEL');
+    const CONFIRM = getLanguageString(language.key, 'CONFIRM');
+    const SURE_DELETE_DEVICE = getLanguageString(language.key, 'SURE_DELETE_DEVICE');
+
+    Modal.alert(DELETE_DEVICE, SURE_DELETE_DEVICE, [
+      { text: CANCEL, onPress: () => console.log('cancel') },
+      { text: CONFIRM,
         onPress: () => {
           dispatch({
             type: 'gizwitsSdk/unBindDevice',
@@ -56,12 +67,17 @@ class DeviceMore extends Component {
     ]);
   }
   switchMode = () => {
-    const BUTTONS = ['华氏度', '摄氏度', '取消'];
+    const { language } = this.props;
+    const FAHRENHEIT = getLanguageString(language.key, 'FAHRENHEIT');
+    const C_UNIT = getLanguageString(language.key, 'C_UNIT');
+    const CANCEL = getLanguageString(language.key, 'CANCEL');
+    const UNIT = getLanguageString(language.key, 'UNIT');
+    const BUTTONS = [FAHRENHEIT, C_UNIT, CANCEL];
     ActionSheet.showActionSheetWithOptions({
       options: BUTTONS,
       cancelButtonIndex: BUTTONS.length - 1,
       // title: 'title',
-      message: '单位',
+      message: UNIT,
       maskClosable: true,
     },
     (buttonIndex) => {
@@ -101,14 +117,14 @@ class DeviceMore extends Component {
               thumb={deviceIcon}
               arrow="horizontal"
               onClick={this.rename.bind(null, device)}
-            >{device.dev_alias || '加热棒'}</Item>
+            >{device.dev_alias || <FormattedMessage id="HEATING_RODS" />}</Item>
           </List>
 
           <List style={styles.list} className="my-list">
             <Item
               arrow="horizontal"
               onClick={this.switchMode}
-            >{unit ? '华氏度' : '摄氏度'}</Item>
+            >{unit ? <FormattedMessage id="FAHRENHEIT" /> : <FormattedMessage id="C_UNIT" />}</Item>
           </List>
 
           <Button

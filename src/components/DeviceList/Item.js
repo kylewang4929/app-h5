@@ -5,6 +5,8 @@ import { SwipeAction, Modal } from 'antd-mobile';
 import { formattingNum } from '../../utils/tool';
 
 import defaultDeviceData from '../../utils/defaultDeviceData';
+import { getUnitText } from '../../utils/getUnit';
+import { FormattedMessage } from 'react-intl';
 
 require('./defaultListStyles.less');
 const logo = require('../../assets/logo.png');
@@ -96,7 +98,7 @@ class Item extends Component {
   render() {
     const { data, onDelete, onClick } = this.props;
     const deviceData = this.getDeviceData();
-    const { Currtemp_Para, Settemp_Para, Resttime_Para } = deviceData.data;
+    const { Currtemp_Para, Settemp_Para, Resttime_Para, Unit_Flag } = deviceData.data;
     const resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
     return (
       <div className="z-depth-1" style={itemStyles.itemContainerBox}>
@@ -104,12 +106,12 @@ class Item extends Component {
           autoClose
           right={[
             {
-              text: <div style={itemStyles.at}>重命名</div>,
+              text: <div style={itemStyles.at}><FormattedMessage id="RENAME" /></div>,
               onPress: () => this.prompt(data),
               style: itemStyles.rename,
             },
             {
-              text: <div style={itemStyles.at}>删除</div>,
+              text: <div style={itemStyles.at}><FormattedMessage id="DELETE" /></div>,
               onPress: () => onDelete(data),
               style: itemStyles.delete,
             },
@@ -123,15 +125,15 @@ class Item extends Component {
               </div>
               <div style={{ ...itemStyles.titleState, ...data.netStatus === 2 ? itemStyles.onLineText : {} }}>
                 <span className="mdi mdi-brightness-1" style={itemStyles.point} />
-                {data.netStatus === 2 ? '在线' : '离线'}
+                {data.netStatus === 2 ? <FormattedMessage id="ON_LINE" /> : <FormattedMessage id="OFF_LINE" />}
               </div>
             </div>
             {
               data.netStatus === 2 ? (
                 <div style={itemStyles.statusBar}>
-                  <ItemStatusBar icon="mdi mdi-oil-temperature" label="当前温度" value={Currtemp_Para / 10} unit="℃" />
-                  <ItemStatusBar icon="mdi mdi-history" label="时间" value={`-${resttime}`} unit="" border />
-                  <ItemStatusBar icon="mdi mdi-oil-temperature" label="设置温度" value={Settemp_Para} unit="℃" />
+                  <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="TEMP" />} value={Currtemp_Para / 10} unit={getUnitText(Unit_Flag)} />
+                  <ItemStatusBar icon="mdi mdi-history" label={<FormattedMessage id="TIME" />} value={`-${resttime}`} unit="" border />
+                  <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="SET_TEMP" />} value={Settemp_Para} unit={getUnitText(Unit_Flag)} />
                 </div>
               ) : null
             }
