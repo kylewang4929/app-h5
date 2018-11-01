@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { List, Button, Modal } from 'antd-mobile';
+import { List, Button, Modal, ActionSheet } from 'antd-mobile';
 import { FormattedMessage } from 'react-intl';
 import BackButton from '../containers/MenuButton/BackButton';
 import NavBar from '../containers/NavBar';
 import MenuPage from '../components/MenuPage';
-import router from '../utils/router';
 
 const Item = List.Item;
 
@@ -28,7 +27,6 @@ const deviceIcon = require('../assets/logo.png');
 
 class DeviceMore extends Component {
   rename = (data) => {
-
     Modal.prompt('重命名', null,
       [
         { text: '取消' },
@@ -57,9 +55,40 @@ class DeviceMore extends Component {
         } },
     ]);
   }
+  switchMode = () => {
+    const BUTTONS = ['华氏度', '摄氏度', '取消'];
+    ActionSheet.showActionSheetWithOptions({
+      options: BUTTONS,
+      cancelButtonIndex: BUTTONS.length - 1,
+      // title: 'title',
+      message: '单位',
+      maskClosable: true,
+    },
+    (buttonIndex) => {
+      const attrs = {};
+      switch (buttonIndex) {
+        case 0: {
+          attrs.Unit_Flag = true;
+          break;
+        }
+        case 1: {
+          attrs.Unit_Flag = false;
+          break;
+        }
+      }
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'gizwitsSdk/sendCmd',
+        payload: {
+          data: attrs,
+        },
+      });
+    });
+  }
   render() {
-    const { deviceList: { data }, dispatch, params: { did }, deviceData } = this.props;
+    const { deviceList: { data }, params: { did }, deviceData } = this.props;
     const device = data.find(v => v.did === did);
+    const unit = deviceData[did].data.Unit_Flag;
     return (
       <div>
         <NavBar
@@ -75,12 +104,19 @@ class DeviceMore extends Component {
             >{device.dev_alias || '加热棒'}</Item>
           </List>
 
-            <Button
-              style={{ ...styles.button }}
-              onClick={this.delete.bind(null, data)}
-            >
-              <FormattedMessage id="DELETE_DEVICE" />
-            </Button>
+          <List style={styles.list} className="my-list">
+            <Item
+              arrow="horizontal"
+              onClick={this.switchMode}
+            >{unit ? '华氏度' : '摄氏度'}</Item>
+          </List>
+
+          <Button
+            style={{ ...styles.button }}
+            onClick={this.delete.bind(null, data)}
+          >
+            <FormattedMessage id="DELETE_DEVICE" />
+          </Button>
         </MenuPage>
       </div>
     );
