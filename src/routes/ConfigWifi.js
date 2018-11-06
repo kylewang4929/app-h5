@@ -122,7 +122,7 @@ class ConfigWifi extends Component {
         key: password,
         mode: 1, // 1是airLink
         timeout: 60,
-        gagentTypes: [0, 8],
+        gagentTypes: [4],
         success: (data) => {
           this.setState({
             status: 'success',

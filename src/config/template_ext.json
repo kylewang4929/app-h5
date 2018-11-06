@@ -1,9 +1,9 @@
 {
   "gizwits": {
-    "iosAppID": "6769af70a2d14219bdd42cc316317ed7",
-    "iosAppSecret": "8587eabc684c4750bc71d1dc94b1fc9d",
-    "androidAppID": "d62439c2c186453db8c9ae5218d954b1",
-    "androidAppSecret": "31248856c71148a79e59a66922ac85b6"
+    "iosAppID": "1efb8bfb281742249dddf14dc77852bc",
+    "iosAppSecret": "b6288be220d34233bb492faf4b0e7538",
+    "androidAppID": "1efb8bfb281742249dddf14dc77852bc",
+    "androidAppSecret": "b6288be220d34233bb492faf4b0e7538"
   },
   "app": {
     "loginStyle": 0,

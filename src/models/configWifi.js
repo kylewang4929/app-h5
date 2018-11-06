@@ -5,7 +5,7 @@ import { getProductSecret } from '../utils/configExpand';
 export default {
   namespace: 'configWifi',
   state: {
-    SSID: '1',
+    SSID: '',
     password: '',
     is5g: false,
     activeDevice: null,
