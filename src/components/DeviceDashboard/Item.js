@@ -186,7 +186,7 @@ class Item extends Component {
             </div>
           </div>
           <div style={itemStyles.statusBar}>
-            <ItemStatusBar active icon="mdi mdi-oil-temperature" label={<FormattedMessage id="CURRENT_TEMP" />} value={Currtemp_Para / 10} unit={getUnitText(Unit_Flag)} />
+            <ItemStatusBar active icon="mdi mdi-oil-temperature" label={<FormattedMessage id="CURRENT_TEMP" />} value={Currtemp_Para} unit={getUnitText(Unit_Flag)} />
             <ItemStatusBar
               // active={select === 'time'}
               icon="mdi mdi-history"

@@ -13,6 +13,7 @@ import { getLanguageJson, getLanguageString } from '../utils/getLanguage';
 import Theme from '../containers/Theme';
 import config from '../config/template';
 import MyToast from '../utils/Toast';
+import defaultDeviceData from '../utils/defaultDeviceData';
 
 const appConfig = config.app;
 
@@ -53,6 +54,17 @@ class App extends Component {
     //     unit: 'DAYS',
     //   },
     // });
+
+    /**
+     * 模拟数据点上报
+     * const { alerts, faults, device, data } = payload;
+    */
+    this.getDeviceStatusSuccess({
+      device: { did: 'ZJNNvXFM2zutcVUj5ipPCC' },
+      data: defaultDeviceData,
+      alerts: {},
+      faults: {},
+    });
 
     window.addEventListener('message', (e) => {
       messageManagement.digestion(this.props.dispatch, e);

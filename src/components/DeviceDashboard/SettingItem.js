@@ -80,7 +80,7 @@ class SettingItem extends Component {
           label={<FormattedMessage id="TEMPERATURE" />}
           border
           min={min}
-          step={0.1}
+          step={1}
           max={max}
         />
         <SliderBox

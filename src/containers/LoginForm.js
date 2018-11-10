@@ -75,11 +75,11 @@ class LoginForm extends React.Component {
   }
 
   submit = () => {
-    const { dispatch, loginState, form, language } = this.props;
+    const { dispatch, loginState: { phoneCode }, form, language } = this.props;
 
     const AN_ACCOUNT_OR_PASSWORD_ERROR = getLanguageString(language.key, 'AN_ACCOUNT_OR_PASSWORD_ERROR');
     const LOGIN_FAILED_PLEASE_TRY_AGAIN = getLanguageString(language.key, 'LOGIN_FAILED_PLEASE_TRY_AGAIN');
-    
+
     form.validateFields((error, value) => {
       if (!error) {
         this.setState({
@@ -89,6 +89,7 @@ class LoginForm extends React.Component {
         let accountType = 'email';
         if (/^(\d)+$/.test(account)) {
           accountType = 'phone';
+          account = `${phoneCode}${account}`;
         }
 
         dispatch({
@@ -220,7 +221,7 @@ class LoginForm extends React.Component {
                     // { pattern: regular.password },
                   ],
                 },
-              ) }
+              )}
             />
           </div>
           {/* 提示 */}

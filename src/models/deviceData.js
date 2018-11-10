@@ -1,6 +1,6 @@
 import messageManagement from '../utils/messageManagement';
 import defaultDeviceData from '../utils/defaultDeviceData';
-
+import { conversionDataPoint } from '../utils/conversionDataPoint';
 
 function filterDeviceData(state, device, data, alerts, faults) {
   const obj = {};
@@ -88,10 +88,17 @@ export default {
       // 如果带有Settemp_Para的时候 需要转换 / 10
 
       const { payload } = action;
-      const { alerts, faults, data, device } = payload;
+      const { alerts, faults, device } = payload;
+      let { data } = payload;
       if (data.Settemp_Para) {
         data.Settemp_Para /= 10;
       }
+      if (data.Currtemp_Para) {
+        data.Currtemp_Para /= 10;
+      }
+
+      data = conversionDataPoint(data);
+      console.log('data', data);
       let obj = {};
       if (device.length > 0) {
         // 数组格式

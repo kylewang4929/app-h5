@@ -6,6 +6,7 @@ import { getProductKeys, getProductSecrets } from '../utils/configExpand';
 import router from '../utils/router';
 import MyToast from '../utils/Toast';
 import { getLanguageString } from '../utils/getLanguage';
+import { conversionDataPointCToF, conversionDataPoint } from '../utils/conversionDataPoint';
 
 const gizwitsConfig = config.gizwits;
 
@@ -172,20 +173,45 @@ export default {
       });
     },
     * sendCmd({ payload }, { put, select }) {
-      const { data } = payload;
+      let { data } = payload;
       const device = yield select(state => state.deviceList.activeDevice);
+      const deviceData = yield select(state => state.deviceData);
 
       // 发送的指令带有Settemp_Para的时候需要转换 * 10
       if (data.Settemp_Para) {
         data.Settemp_Para *= 10;
       }
 
-      write({ device, data });
+      // 判断是不是摄氏度模式，如果是的话，需要转换成F再发过去
+      const newData = conversionDataPointCToF(JSON.parse(JSON.stringify(data)));
+
+      write({ device, data: newData });
+
+      /**
+       * 如果发了单位过去
+       * 要重新更新一下本地状态
+       */
+      if (data.Unit_Flag === false) {
+        const coverData = { ...deviceData[device.did].data, ...data };
+        if (coverData.Settemp_Para) {
+          coverData.Settemp_Para *= 10;
+        }
+        data = conversionDataPoint(coverData);
+      }
+      if (data.Unit_Flag === true) {
+        const coverData = { ...deviceData[device.did].data, ...data };
+        if (coverData.Settemp_Para) {
+          coverData.Settemp_Para *= 10;
+        }
+        data = conversionDataPointCToF(coverData);
+      }
+
       /**
        * 发送完指令后，设置一个十秒的延时，如果此时设备还是没有上报数据的话，提示用户可能离线
        * true 表示已经发出指令，等待回复
        * 还需要判断本次发送的指令是否是当前激活的设备
        */
+      console.log('updateDeviceData', JSON.stringify(data));
       checkInOnline(`deviceOnlineCheck${device.did}`);
       yield put({
         type: 'deviceData/updateDeviceData',

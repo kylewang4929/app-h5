@@ -90,7 +90,7 @@ class SetPassPhone extends React.Component {
      * 手机号需要遵循+{国家码}{手机号}
      */
     const { dispatch, loginState } = this.props;
-    const { phoneNum } = loginState;
+    const { phoneNum, phoneCode } = loginState;
     let appSecret = gizwitsConfig.androidAppSecret;
 
     try {
@@ -106,7 +106,7 @@ class SetPassPhone extends React.Component {
     dispatch({
       type: 'loginState/sendCode',
       payload: {
-        phone: phoneNum,
+        phone: `${phoneCode}${phoneNum}`,
         appSecret,
       },
     });
@@ -115,7 +115,7 @@ class SetPassPhone extends React.Component {
   submit() {
     const { form, dispatch, loginState, onSubmitDispatch } = this.props;
     const { getFieldValue } = form;
-    const { phoneNum } = loginState;
+    const { phoneNum, phoneCode } = loginState;
 
     const password = getFieldValue('password');
     const code = getFieldValue('code');
@@ -136,7 +136,7 @@ class SetPassPhone extends React.Component {
       dispatch({
         type: 'loginState/registerPhone',
         payload: {
-          userName: phoneNum,
+          userName: `${phoneCode}${phoneNum}`,
           password,
           verifyCode: code,
           accountType: accountType.GizUserPhone,
