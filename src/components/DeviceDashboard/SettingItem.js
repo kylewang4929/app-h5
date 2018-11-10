@@ -89,7 +89,7 @@ class SettingItem extends Component {
           label={<FormattedMessage id="TIME" />}
           min={0}
           step={1}
-          max={600}
+          max={1440}
         />
       </div>
     );

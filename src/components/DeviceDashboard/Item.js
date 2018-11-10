@@ -208,7 +208,7 @@ class Item extends Component {
           {
             select === 'time' ? <SliderItem
               min={0}
-              max={180}
+              max={1440}
               value={Settime_Para}
               step={1}
               onChange={this.onChange}
