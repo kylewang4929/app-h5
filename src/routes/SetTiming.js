@@ -97,6 +97,7 @@ class SetTiming extends Component {
     router.goBack(-1);
   }
   parseValue = (value) => {
+    value = parseInt(value);
     if (value <= 255) {
       return [0, value];
     }

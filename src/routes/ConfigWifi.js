@@ -128,9 +128,9 @@ class ConfigWifi extends Component {
             status: 'success',
           });
           // 一秒后跳回设备列表
-          router.goBack(-2);
-          const CON_IS_SUCCESSFUL_CHOOSE_DEVICE = getLanguageString(language.key, 'CON_IS_SUCCESSFUL_CHOOSE_DEVICE');
-          InfoAlert.show(CON_IS_SUCCESSFUL_CHOOSE_DEVICE, 'success', 3000);
+          router.goBack(-3);
+          // const CON_IS_SUCCESSFUL_CHOOSE_DEVICE = getLanguageString(language.key, 'CON_IS_SUCCESSFUL_CHOOSE_DEVICE');
+          // InfoAlert.show(CON_IS_SUCCESSFUL_CHOOSE_DEVICE, 'success', 3000);
         },
         error: (err) => {
           this.setState({

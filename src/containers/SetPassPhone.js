@@ -91,11 +91,16 @@ class SetPassPhone extends React.Component {
      */
     const { dispatch, loginState } = this.props;
     const { phoneNum } = loginState;
-    let appSecret = '';
-    if (device.platform === 'Android') {
-      appSecret = gizwitsConfig.androidAppSecret;
-    } else {
-      appSecret = gizwitsConfig.iosAppSecret;
+    let appSecret = gizwitsConfig.androidAppSecret;
+
+    try {
+      if (device.platform === 'Android') {
+        appSecret = gizwitsConfig.androidAppSecret;
+      } else {
+        appSecret = gizwitsConfig.iosAppSecret;
+      }
+    } catch (error) {
+
     }
 
     dispatch({
@@ -160,7 +165,7 @@ class SetPassPhone extends React.Component {
     const SECONDS = getLanguageString(language.key, 'SECONDS');
 
     const { showPassword } = this.state;
-    
+
     return (
       <div className="flex-container">
         <div style={styles.tipsWrapper}>

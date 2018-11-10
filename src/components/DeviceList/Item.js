@@ -100,6 +100,7 @@ class Item extends Component {
     const deviceData = this.getDeviceData();
     const { Currtemp_Para, Settemp_Para, Resttime_Para, Unit_Flag } = deviceData.data;
     const resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
+
     return (
       <div className="z-depth-1" style={itemStyles.itemContainerBox}>
         <SwipeAction
