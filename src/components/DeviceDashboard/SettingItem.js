@@ -53,11 +53,9 @@ class SettingItem extends Component {
   }
   onTempChange = (value) => {
     // 小数点是0.1
-    value = parseFloat(value);
-    value = value.toFixed(1);
     const { onChange } = this.props;
     const { data } = this.props;
-    data.temp = parseFloat(value);
+    data.temp = value;
     onChange(data);
   }
   onTimeChange = (value) => {
@@ -75,7 +73,7 @@ class SettingItem extends Component {
           onChange={this.onTempChange}
           onAfterChange={this.onTempChange}
           value={data.temp}
-          valueText={data.temp}
+          valueText={(data.temp / 10).toFixed(1)}
           unit={unit}
           label={<FormattedMessage id="TEMPERATURE" />}
           border

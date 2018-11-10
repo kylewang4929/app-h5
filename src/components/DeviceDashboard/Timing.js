@@ -43,8 +43,11 @@ class List extends Component {
     let index = 0;
     for (let i = 0; i < stage * 4; i += 4) {
       // 获取温度
-      const temp = data[i] + data[i + 1];
-      const time = data[i + 2] + data[i + 3];
+      let temp = `${data[i].toString(16)}${data[i + 1].toString(16)}`;
+      let time = `${data[i + 2].toString(16)}${data[i + 3].toString(16)}`;
+
+      temp = parseInt(temp, 16);
+      time = parseInt(time, 16);
       // 构建列表
       const item = {
         temp,
@@ -160,7 +163,7 @@ class Item extends Component {
             <span style={itemStyles.title}>
               <FormattedMessage id="PHASE" /> {data.index + 1}
             </span>
-            <ValueItem icon="oil-temperature" value={data.temp} unit={unit} />
+            <ValueItem icon="oil-temperature" value={(data.temp / 10).toFixed(1)} unit={unit} />
             <ValueItem icon="history" value={`-${this.formattingNum(parseInt(data.time / 60))}:${this.formattingNum(data.time % 60)}`} unit="" />
           </div>
         </SwipeAction>

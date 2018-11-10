@@ -131,8 +131,7 @@ class Item extends Component {
     if (this.state.select === 'time') {
       cmd.Settime_Para = value;
     } else {
-      value = value.toFixed(1);
-      cmd.Settemp_Para = parseFloat(value);
+      cmd.Settemp_Para = value;
     }
     dispatch({
       type: 'gizwitsSdk/sendCmd',
@@ -186,7 +185,7 @@ class Item extends Component {
             </div>
           </div>
           <div style={itemStyles.statusBar}>
-            <ItemStatusBar active icon="mdi mdi-oil-temperature" label={<FormattedMessage id="CURRENT_TEMP" />} value={Currtemp_Para} unit={getUnitText(Unit_Flag)} />
+            <ItemStatusBar active icon="mdi mdi-oil-temperature" label={<FormattedMessage id="CURRENT_TEMP" />} value={(Currtemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)} />
             <ItemStatusBar
               // active={select === 'time'}
               icon="mdi mdi-history"
@@ -198,7 +197,7 @@ class Item extends Component {
               // active={select === 'temp'}
               icon="mdi mdi-oil-temperature"
               onClick={() => { this.setState({ select: 'temp' }); }}
-              label={<FormattedMessage id="SET_TEMP" />} value={Settemp_Para} unit={getUnitText(Unit_Flag)}
+              label={<FormattedMessage id="SET_TEMP" />} value={(Settemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)}
             />
           </div>
           <div style={itemStyles.title}>
@@ -221,7 +220,7 @@ class Item extends Component {
               min={min}
               max={max}
               value={Settemp_Para}
-              step={0.1}
+              step={1}
               onChange={this.onChange}
               onAfterChange={this.onAfterChange}
             /> : null

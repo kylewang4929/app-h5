@@ -132,9 +132,9 @@ class Item extends Component {
             {
               data.netStatus === 2 ? (
                 <div style={itemStyles.statusBar}>
-                  <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="TEMP" />} value={Currtemp_Para} unit={getUnitText(Unit_Flag)} />
+                  <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="TEMP" />} value={(Currtemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)} />
                   <ItemStatusBar icon="mdi mdi-history" label={<FormattedMessage id="TIME" />} value={`-${resttime}`} unit="" border />
-                  <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="SET_TEMP" />} value={Settemp_Para} unit={getUnitText(Unit_Flag)} />
+                  <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="SET_TEMP" />} value={(Settemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)} />
                 </div>
               ) : null
             }

@@ -173,53 +173,60 @@ export default {
       });
     },
     * sendCmd({ payload }, { put, select }) {
-      let { data } = payload;
-      const device = yield select(state => state.deviceList.activeDevice);
-      const deviceData = yield select(state => state.deviceData);
+      try {
+        let { data } = payload;
+        const device = yield select(state => state.deviceList.activeDevice);
+        const deviceData = yield select(state => state.deviceData);
+
+        const deviceDataPoint = deviceData[device.did].data || {};
+
+        let newData = {};
+        if (deviceDataPoint.Unit_Flag === false) {
+        // 判断是不是摄氏度模式，如果是的话，需要转换成F再发过去
+          newData = conversionDataPointCToF(JSON.parse(JSON.stringify(data)));
+        } else {
+          newData = JSON.parse(JSON.stringify(data));
+        }
 
       // 发送的指令带有Settemp_Para的时候需要转换 * 10
-      if (data.Settemp_Para) {
-        data.Settemp_Para *= 10;
-      }
+        if (newData.Settemp_Para) {
+          newData.Settemp_Para *= 10;
+        }
 
-      // 判断是不是摄氏度模式，如果是的话，需要转换成F再发过去
-      const newData = conversionDataPointCToF(JSON.parse(JSON.stringify(data)));
-
-      write({ device, data: newData });
+        write({ device, data: newData });
 
       /**
        * 如果发了单位过去
        * 要重新更新一下本地状态
        */
-      if (data.Unit_Flag === false) {
-        const coverData = { ...deviceData[device.did].data, ...data };
-        if (coverData.Settemp_Para) {
-          coverData.Settemp_Para *= 10;
+        const coverData = { ...deviceDataPoint, ...data };
+        if (data.Unit_Flag === false && deviceDataPoint.Unit_Flag !== data.Unit_Flag) {
+        // 改成摄氏度
+          data = conversionDataPoint(JSON.parse(JSON.stringify(coverData)));
         }
-        data = conversionDataPoint(coverData);
-      }
-      if (data.Unit_Flag === true) {
-        const coverData = { ...deviceData[device.did].data, ...data };
-        if (coverData.Settemp_Para) {
-          coverData.Settemp_Para *= 10;
+        if (data.Unit_Flag === true && deviceDataPoint.Unit_Flag !== data.Unit_Flag) {
+        // 改成华氏度
+          data = conversionDataPointCToF(JSON.parse(JSON.stringify(coverData)));
         }
-        data = conversionDataPointCToF(coverData);
-      }
 
       /**
        * 发送完指令后，设置一个十秒的延时，如果此时设备还是没有上报数据的话，提示用户可能离线
        * true 表示已经发出指令，等待回复
        * 还需要判断本次发送的指令是否是当前激活的设备
        */
-      console.log('updateDeviceData', JSON.stringify(data));
-      checkInOnline(`deviceOnlineCheck${device.did}`);
-      yield put({
-        type: 'deviceData/updateDeviceData',
-        payload: {
-          data,
-          device,
-        },
-      });
+        console.log('updateDeviceData', JSON.stringify(data));
+        checkInOnline(`deviceOnlineCheck${device.did}`);
+        yield put({
+          type: 'deviceData/updateDeviceData',
+          payload: {
+            data,
+            device,
+            onlyUpdate: true,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
     },
     * sendCmdToGroup({ payload }, { put, call }) {
       const { data, group } = payload;

@@ -7,9 +7,9 @@ const getUnitText = (unit) => {
 };
 const getScale = (unit) => {
   if (unit) {
-    return { min: 32, max: 211 };
+    return { min: 320, max: 2110 };
   }
-  return { min: 0, max: 99 };
+  return { min: 0, max: 990 };
 };
 
 export { getUnitText, getScale };

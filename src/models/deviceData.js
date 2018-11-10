@@ -88,17 +88,12 @@ export default {
       // 如果带有Settemp_Para的时候 需要转换 / 10
 
       const { payload } = action;
-      const { alerts, faults, device } = payload;
+      const { alerts, faults, device, onlyUpdate } = payload;
       let { data } = payload;
-      if (data.Settemp_Para) {
-        data.Settemp_Para /= 10;
-      }
-      if (data.Currtemp_Para) {
-        data.Currtemp_Para /= 10;
-      }
 
-      data = conversionDataPoint(data);
-      console.log('data', data);
+      if (!onlyUpdate) {
+        data = conversionDataPoint(data);
+      }
       let obj = {};
       if (device.length > 0) {
         // 数组格式

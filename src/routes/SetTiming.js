@@ -40,8 +40,11 @@ class SetTiming extends Component {
     let index = 0;
     for (let i = 0; i < stage * 4; i += 4) {
       // 获取温度
-      const temp = data[i] + data[i + 1];
-      const time = data[i + 2] + data[i + 3];
+      let temp = `${data[i].toString(16)}${data[i + 1].toString(16)}`;
+      let time = `${data[i + 2].toString(16)}${data[i + 3].toString(16)}`;
+
+      temp = parseInt(temp, 16);
+      time = parseInt(time, 16);
       // 构建列表
       const item = {
         temp,
@@ -58,7 +61,7 @@ class SetTiming extends Component {
     const { data } = this.state;
     data.push({
       index: data.length,
-      temp: 32,
+      temp: 320,
       time: 60,
     });
     this.setState({
@@ -67,7 +70,6 @@ class SetTiming extends Component {
   }
 
   onChange = (item) => {
-    console.log(item);
     const { data } = this.state;
     data.splice(item.index, 1, item);
     this.setState({
@@ -85,6 +87,7 @@ class SetTiming extends Component {
       const value = this.parseValue(temp).concat(this.parseValue(time));
       cookData.splice(index * 4, 4, ...value);
     });
+    console.log('cookData', cookData);
     dispatch({
       type: 'gizwitsSdk/sendCmd',
       payload: {
@@ -97,11 +100,20 @@ class SetTiming extends Component {
     router.goBack(-1);
   }
   parseValue = (value) => {
-    value = parseInt(value);
-    if (value <= 255) {
-      return [0, value];
+    console.log('value1', value);
+    value = value.toString(16);
+    console.log('value1', value);
+    // 补够4位
+    let newValue = value;
+    for (let i = 0; i < 4 - value.length; i++) {
+      newValue = `0${newValue}`;
     }
-    return [value - 255, 255];
+    const string = [];
+    for (let i = 0; i < newValue.length; i += 2) {
+      string.push(parseInt(`${newValue[i]}${newValue[i + 1]}`, 16));
+    }
+    console.log('value1', string);
+    return new Array(2 - string.length).fill(0).concat(string);
   }
 
   render() {
