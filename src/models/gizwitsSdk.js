@@ -189,9 +189,9 @@ export default {
         }
 
       // 发送的指令带有Settemp_Para的时候需要转换 * 10
-        if (newData.Settemp_Para) {
-          newData.Settemp_Para *= 10;
-        }
+        // if (newData.Settemp_Para) {
+        //   newData.Settemp_Para *= 10;
+        // }
 
         write({ device, data: newData });
 

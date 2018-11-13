@@ -53,18 +53,17 @@ class Account extends Component {
 
   onScan = () => {
     cordova.plugins.barcodeScanner.scan(
-      function (result) {
+      (result) => {
         if (!result.cancelled) {
-          alert("Barcode type is: " + result.format);
-          alert("Decoded text is: " + result.text);
-        }
-        else {
-          alert("You have cancelled scan");
+          alert(`Barcode type is: ${  result.format}`);
+          alert(`Decoded text is: ${  result.text}`);
+        } else {
+          alert('You have cancelled scan');
         }
       },
-      function (error) {
-        alert("Scanning failed: " + error);
-      }
+      (error) => {
+        alert(`Scanning failed: ${  error}`);
+      },
     );
   };
 
@@ -125,7 +124,7 @@ class Account extends Component {
 
   render() {
     const { tintColor } = this.context.properties;
-    let { language, userState } = this.props;
+    const { language, userState } = this.props;
     const { name, phone, email } = userState;
     const iconColor = {
       color: tintColor,
@@ -164,6 +163,11 @@ class Account extends Component {
               onClick={this.goToAboutUs}
               thumb={<span style={{ ...styles.icon, ...iconColor }} className="mdi mdi-information" />}
             ><FormattedMessage id="ABOUT" /></Item>
+            <Item
+              arrow="horizontal"
+              onClick={this.goToFeedback}
+              thumb={<span style={{ ...styles.icon, ...iconColor }} className="mdi mdi-send" />}
+            ><FormattedMessage id="FEED_BACK" /></Item>
           </List>
         </MenuPage>
       </div>

@@ -34,12 +34,28 @@ class DevicePage extends Component {
     const { did, productKey, mac } = params;
     router.go(`#/menu/deviceMore/${productKey}/${mac}/${did}`);
   }
+  parseValue = (value) => {
+    value = value.toString(16);
+    // 补够4位
+    let newValue = value;
+    for (let i = 0; i < 4 - value.length; i++) {
+      newValue = `0${newValue}`;
+    }
+    const string = [];
+    for (let i = 0; i < newValue.length; i += 2) {
+      string.push(parseInt(`${newValue[i]}${newValue[i + 1]}`, 16));
+    }
+    return new Array(2 - string.length).fill(0).concat(string);
+  }
   onDelete = (data) => {
     const { dispatch, params: { did }, deviceData } = this.props;
-    let { Cook_Para, Cookstage_Para } = deviceData[did].data;
+    let { Cook_Para, Cookstage_Para, Settemp_Para, Settime_Para } = deviceData[did].data;
     Cook_Para.splice(data.index, 4);
-    Cook_Para = Cook_Para.concat([0, 0, 0, 0]);
-    Cookstage_Para -= 1;
+
+    const fillData = this.parseValue(Settemp_Para).concat(this.parseValue(Settime_Para));
+
+    Cook_Para = fillData.concat(Cook_Para);
+    // Cookstage_Para -= 1;
     dispatch({
       type: 'gizwitsSdk/sendCmd',
       payload: {

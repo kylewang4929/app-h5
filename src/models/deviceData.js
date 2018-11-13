@@ -92,7 +92,7 @@ export default {
       let { data } = payload;
 
       if (!onlyUpdate) {
-        data = conversionDataPoint(data);
+        data = conversionDataPoint(JSON.parse(JSON.stringify(data)));
       }
       let obj = {};
       if (device.length > 0) {
