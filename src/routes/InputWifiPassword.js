@@ -38,6 +38,11 @@ const styles = {
     margin: '0.4rem 0.4rem',
     fontSize: '0.28rem',
   },
+  ssidTips: {
+    fontSize: '0.26rem',
+    textAlign: 'center',
+    padding: '0 0.6rem',
+  },
 };
 
 class InputWifiPassword extends Component {
@@ -91,6 +96,9 @@ class InputWifiPassword extends Component {
       password: value,
     });
   }
+  setting = () => {
+    window.cordova.plugins.settings.open(['application_details', true], () => { }, () => { });
+  }
   render() {
     const { language, configWifi } = this.props;
     const { SSID } = configWifi;
@@ -105,27 +113,52 @@ class InputWifiPassword extends Component {
         <MenuPage style={styles.container}>
           <span style={styles.wifiIcon} className="mdi mdi-wifi" />
 
-          <div style={styles.content}>
-            <span style={styles.wifiBox}><FormattedMessage id="CURRENT_WIFI_VALUE" /><span style={styles.wifiName}>{SSID}</span></span>
-            <List className="no-border-list my-form" style={styles.inputBox}>
-              <InputItem
-                placeholder={PASSWORD}
-                value={password}
-                onChange={this.onChange}
-              >
-                <i className="mdi mdi-wifi" />
-              </InputItem>
-            </List>
+          {
+            SSID === '<unknown ssid>' ? (
+              <div style={styles.ssidTips}>
+                <p>
+                  <FormattedMessage id="CONNECT_WIFI_TIPS_1" />
+                </p>
+                <p>
+                  <FormattedMessage id="CONNECT_WIFI_TIPS_2" />
+                </p>
+                <p>
+                  <FormattedMessage id="CONNECT_WIFI_TIPS_3" />
+                </p>
 
-            <Button
-              style={{ ...styles.button }}
-              onClick={this.next}
-              className="btn"
-              type="primary"
-            >
-              <FormattedMessage id="NEXT" />
-            </Button>
-          </div>
+                <Button
+                  style={{ ...styles.button }}
+                  onClick={this.setting}
+                  className="btn"
+                  type="primary"
+                >
+                  <FormattedMessage id="SETTING" />
+                </Button>
+              </div>
+            ) : (
+              <div style={styles.content}>
+                <span style={styles.wifiBox}><FormattedMessage id="CURRENT_WIFI_VALUE" /><span style={styles.wifiName}>{SSID}</span></span>
+                <List className="no-border-list my-form" style={styles.inputBox}>
+                  <InputItem
+                    placeholder={PASSWORD}
+                    value={password}
+                    onChange={this.onChange}
+                  >
+                    <i className="mdi mdi-wifi" />
+                  </InputItem>
+                </List>
+
+                <Button
+                  style={{ ...styles.button }}
+                  onClick={this.next}
+                  className="btn"
+                  type="primary"
+                >
+                  <FormattedMessage id="NEXT" />
+                </Button>
+              </div>
+            )
+          }
         </MenuPage>
       </div>
     );

@@ -67,12 +67,13 @@ class SearchDevice extends Component {
   }
   config = () => {
     // 判断是否是wifi环境
-    const { configWifi } = this.props;
+    const { configWifi, language } = this.props;
+    const CONNECT_WIFI_TIPS = getLanguageString(language.key, 'CONNECT_WIFI_TIPS');
     const { SSID } = configWifi;
     if (SSID !== '' && SSID !== null) {
       router.go('#/menu/inputWifiPassword');
     } else {
-      Toast.info('请连接Wi-Fi后，再进行该操作。');
+      Toast.info(CONNECT_WIFI_TIPS);
     }
   }
 

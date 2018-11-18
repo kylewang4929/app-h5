@@ -361,5 +361,9 @@
   "ADVANCED_SETTING": "高级设置",
   "ADD": "增加",
   "BREAK_THE_COOKING_CYCLE_INTO_MUITIPLE_PHASES": "把烹饪周期分成多个阶段",
-  "PHASE": "阶段"
+  "PHASE": "阶段",
+  "CONNECT_WIFI_TIPS":"请连接Wi-Fi后，再进行该操作",
+  "CONNECT_WIFI_TIPS_1": "进行配网需要获取当前连接的Wi-Fi信息",
+  "CONNECT_WIFI_TIPS_2": "而Android 系统要求获取Wi-Fi信息需要启用位置服务",
+  "CONNECT_WIFI_TIPS_3": "如果要继续，请点击下方按钮，去设置开启位置服务"
 }
