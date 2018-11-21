@@ -98,7 +98,7 @@ export async function sendCode({ phone, appSecret }) {
 
 // 发送数据点给设备
 export async function write({ device, data }) {
-  return CordovaRequest('GizWifiDeviceModule', 'write', { device, data });
+  return CordovaRequest('GizWifiDeviceModule', 'write', { device, data, sn: 0 });
 }
 
 // 更新设备信息

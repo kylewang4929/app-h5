@@ -54,11 +54,12 @@ class ForgotPassword extends React.Component {
   }
 
   submitPhone(phone, password, code) {
-    const { dispatch } = this.props;
+    const { dispatch, loginState: { phoneCode } } = this.props;
+    // 加区号
     dispatch({
       type: 'loginState/forgotPassword',
       payload: {
-        phone,
+        phone: `${phoneCode}${phone}`,
         new_pwd: password,
         code,
       },
@@ -101,33 +102,33 @@ class ForgotPassword extends React.Component {
                 <SetPassPhone onSubmitDispatch={this.submitPhone.bind(this)} />
               </WingBlank>
               : (
-              <div>
-                <CountryPicker />
-                <List className="no-border-list">
-                  <InputItem
-                    placeholder={accountPlaceholder}
-                    {...getFieldProps(
+                <div>
+                  <CountryPicker />
+                  <List className="no-border-list">
+                    <InputItem
+                      placeholder={accountPlaceholder}
+                      {...getFieldProps(
                       'phoneOrEmail',
-                      {
-                        rules: [
+                        {
+                          rules: [
                           { required: true },
                           { pattern: regularString },
                         ],
-                      },
+                        },
                     )}
-                  />
-                </List>
-                <WhiteSpace size="xl" />
-                <Button
-                  style={styles.button}
-                  disabled={!(value && !errors)}
-                  className="btn"
-                  type="primary"
-                  onClick={this.submit.bind(this)}
-                >
-                  <FormattedMessage id="RESET_PASSWORD" />
-                </Button>
-              </div>
+                    />
+                  </List>
+                  <WhiteSpace size="xl" />
+                  <Button
+                    style={styles.button}
+                    disabled={!(value && !errors)}
+                    className="btn"
+                    type="primary"
+                    onClick={this.submit.bind(this)}
+                  >
+                    <FormattedMessage id="RESET_PASSWORD" />
+                  </Button>
+                </div>
               )
           }
         </MenuPage>
@@ -140,6 +141,7 @@ class ForgotPassword extends React.Component {
 function mapStateToProps(state) {
   return {
     language: state.language,
+    loginState: state.loginState,
   };
 }
 
