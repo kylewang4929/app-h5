@@ -49,17 +49,22 @@ class DevicePage extends Component {
   }
   onDelete = (data) => {
     const { dispatch, params: { did }, deviceData } = this.props;
-    let { Cook_Para, Cookstage_Para, Settemp_Para, Settime_Para } = deviceData[did].data;
-    Cook_Para.splice(data.index, 4);
+    const { Cook_Para, Cookstage_Para, Settemp_Para, Settime_Para } = deviceData[did].data;
+
+    console.log('newCookPara', JSON.parse(JSON.stringify(Cook_Para)));
+    let newCookPara = JSON.parse(JSON.stringify(Cook_Para));
+    console.log('data.index', data.index);
+    newCookPara.splice(data.index * 4, 4);
 
     const fillData = this.parseValue(Settemp_Para).concat(this.parseValue(Settime_Para));
-
-    Cook_Para = fillData.concat(Cook_Para);
+    console.log('fillData', fillData);
+    console.log('newCookPara', JSON.stringify(newCookPara));
+    newCookPara = fillData.concat(newCookPara);
     // Cookstage_Para -= 1;
     dispatch({
       type: 'gizwitsSdk/sendCmd',
       payload: {
-        data: { Cookstage_Para, Cook_Para },
+        data: { Cookstage_Para, Cook_Para: newCookPara },
       },
     });
   }

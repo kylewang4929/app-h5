@@ -14,6 +14,15 @@ function parseValue(value) {
   return new Array(2 - string.length).fill(0).concat(string);
 }
 
+function numberTo16(value) {
+  value = value.toString(16);
+  if (value.length === 1) {
+    // 补0
+    value = `0${value}`;
+  }
+  return value;
+}
+
 function FToC(f) {
   console.log('FToC', f);
   f /= 10;
@@ -29,6 +38,12 @@ function CToF(c) {
 
 function conversionDataPoint(dataPoint) {
   // 判断上报的数据是否是摄氏度，是摄氏度的话做个转换
+  console.log('conversionDataPoint', dataPoint);
+  try {
+    dataPoint = JSON.parse(JSON.stringify(dataPoint));
+  } catch (error) {
+
+  }
   if (dataPoint.Unit_Flag === false) {
     // 华氏度转换成摄氏度
     if (dataPoint.Settemp_Para !== undefined) {
@@ -38,10 +53,13 @@ function conversionDataPoint(dataPoint) {
       dataPoint.Currtemp_Para = FToC(dataPoint.Currtemp_Para);
     }
     if (dataPoint.Cook_Para !== undefined) {
-      for (let i = 0; i <= 4; i++) {
+      for (let i = 0; i < dataPoint.Cookstage_Para; i++) {
         const baseIndex = (i * 4);
-        let value = `${dataPoint.Cook_Para[baseIndex].toString(16)}${dataPoint.Cook_Para[baseIndex + 1].toString(16)}'`;
+        let value = `${numberTo16(dataPoint.Cook_Para[baseIndex])}${numberTo16(dataPoint.Cook_Para[baseIndex + 1])}`;
+        console.log('baseIndex', baseIndex);
+        console.log('value', value);
         value = parseInt(value, 16);
+        console.log('value', value);
         value = FToC(value);
         value = parseValue(value);
         dataPoint.Cook_Para.splice(baseIndex, 2, ...value);
@@ -53,6 +71,11 @@ function conversionDataPoint(dataPoint) {
 
 function conversionDataPointCToF(dataPoint) {
   console.log('conversionDataPointCToF', dataPoint);
+  try {
+    dataPoint = JSON.parse(JSON.stringify(dataPoint));
+  } catch (error) {
+
+  }
   if (dataPoint.Settemp_Para !== undefined) {
     dataPoint.Settemp_Para = CToF(dataPoint.Settemp_Para);
     console.log('dataPoint.Settemp_Para', dataPoint.Settemp_Para);
@@ -63,7 +86,7 @@ function conversionDataPointCToF(dataPoint) {
   if (dataPoint.Cook_Para !== undefined) {
     for (let i = 0; i <= 4; i++) {
       const baseIndex = (i * 4);
-      let value = `${dataPoint.Cook_Para[baseIndex].toString(16)}${dataPoint.Cook_Para[baseIndex + 1].toString(16)}`;
+      let value = `${numberTo16(dataPoint.Cook_Para[baseIndex])}${numberTo16(dataPoint.Cook_Para[baseIndex + 1])}`;
       value = parseInt(value, 16);
       value = CToF(value);
       value = parseValue(value);

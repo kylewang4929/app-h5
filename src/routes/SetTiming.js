@@ -35,13 +35,23 @@ class SetTiming extends Component {
       data,
     });
   }
+
+  numberTo16 = (value) => {
+    value = value.toString(16);
+    if (value.length === 1) {
+      // 补0
+      value = `0${value}`;
+    }
+    return value;
+  }
+
   getTiming = (data, stage) => {
     const list = [];
     let index = 0;
     for (let i = 0; i < stage * 4; i += 4) {
       // 获取温度
-      let temp = `${data[i].toString(16)}${data[i + 1].toString(16)}`;
-      let time = `${data[i + 2].toString(16)}${data[i + 3].toString(16)}`;
+      let temp = `${this.numberTo16(data[i])}${this.numberTo16(data[i + 1])}`;
+      let time = `${this.numberTo16(data[i + 2])}${this.numberTo16(data[i + 3])}`;
 
       temp = parseInt(temp, 16);
       time = parseInt(time, 16);

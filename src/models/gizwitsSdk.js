@@ -183,9 +183,9 @@ export default {
         let newData = {};
         if (deviceDataPoint.Unit_Flag === false) {
         // 判断是不是摄氏度模式，如果是的话，需要转换成F再发过去
-          newData = conversionDataPointCToF(JSON.parse(JSON.stringify(data)));
+          newData = conversionDataPointCToF(data);
         } else {
-          newData = JSON.parse(JSON.stringify(data));
+          newData = data;
         }
 
       // 发送的指令带有Settemp_Para的时候需要转换 * 10
@@ -202,11 +202,11 @@ export default {
         const coverData = { ...deviceDataPoint, ...data };
         if (data.Unit_Flag === false && deviceDataPoint.Unit_Flag !== data.Unit_Flag) {
         // 改成摄氏度
-          data = conversionDataPoint(JSON.parse(JSON.stringify(coverData)));
+          data = conversionDataPoint(coverData);
         }
         if (data.Unit_Flag === true && deviceDataPoint.Unit_Flag !== data.Unit_Flag) {
         // 改成华氏度
-          data = conversionDataPointCToF(JSON.parse(JSON.stringify(coverData)));
+          data = conversionDataPointCToF(coverData);
         }
 
       /**

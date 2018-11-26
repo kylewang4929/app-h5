@@ -59,12 +59,12 @@ class App extends Component {
      * 模拟数据点上报
      * const { alerts, faults, device, data } = payload;
     */
-    this.getDeviceStatusSuccess({
-      device: { did: 'ZJNNvXFM2zutcVUj5ipPCC' },
-      data: defaultDeviceData,
-      alerts: {},
-      faults: {},
-    });
+    // this.getDeviceStatusSuccess({
+    //   device: { did: 'ZJNNvXFM2zutcVUj5ipPCC' },
+    //   data: defaultDeviceData,
+    //   alerts: {},
+    //   faults: {},
+    // });
 
     window.addEventListener('message', (e) => {
       messageManagement.digestion(this.props.dispatch, e);
