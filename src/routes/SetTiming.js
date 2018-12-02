@@ -46,8 +46,20 @@ class SetTiming extends Component {
   }
 
   getTiming = (data, stage) => {
+    const { deviceData, params: { did } } = this.props;
     const list = [];
-    let index = 0;
+    const { Settemp_Para, Settime_Para } = deviceData[did].data;
+
+    /**
+     * 插入第一段
+     */
+    list.push({
+      temp: Settemp_Para,
+      time: Settime_Para,
+      index: 0,
+    });
+
+    let index = 1;
     for (let i = 0; i < stage * 4; i += 4) {
       // 获取温度
       let temp = `${this.numberTo16(data[i])}${this.numberTo16(data[i + 1])}`;
@@ -64,6 +76,7 @@ class SetTiming extends Component {
       list.push(item);
       index += 1;
     }
+
     return list;
   }
   onAdd = () => {

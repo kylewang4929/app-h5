@@ -1,8 +1,8 @@
 [
   {
     "categoryId": "socket",
-    "name": "Heating rods",
-    "en_name": "Heating Rod",
+    "name": "sousvide device",
+    "en_name": "sousvide device",
     "productKey": "479d08c04d884772be5cdb18f0b1d0c9",
     "productSecret": "255b88dd4cbf401685a8e157e974469c",
     "templateId": "com.gizwits.socket.1",

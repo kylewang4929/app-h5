@@ -99,7 +99,7 @@ class DevicePage extends Component {
           <div style={styles.buttonBox}>
             <Button style={styles.button} onClick={this.toggle}>
               {
-              flag ? <FormattedMessage id="PAUSE" /> : <FormattedMessage id="START" />
+                flag ? <FormattedMessage id="PAUSE" /> : <FormattedMessage id="START" />
               }
             </Button>
           </div>
