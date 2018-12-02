@@ -51,16 +51,11 @@ class DevicePage extends Component {
     const { dispatch, params: { did }, deviceData } = this.props;
     const { Cook_Para, Cookstage_Para, Settemp_Para, Settime_Para } = deviceData[did].data;
 
-    console.log('newCookPara', JSON.parse(JSON.stringify(Cook_Para)));
     let newCookPara = JSON.parse(JSON.stringify(Cook_Para));
-    console.log('data.index', data.index);
     newCookPara.splice(data.index * 4, 4);
 
     const fillData = this.parseValue(Settemp_Para).concat(this.parseValue(Settime_Para));
-    console.log('fillData', fillData);
-    console.log('newCookPara', JSON.stringify(newCookPara));
     newCookPara = fillData.concat(newCookPara);
-    // Cookstage_Para -= 1;
     dispatch({
       type: 'gizwitsSdk/sendCmd',
       payload: {

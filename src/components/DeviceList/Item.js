@@ -98,9 +98,13 @@ class Item extends Component {
   render() {
     const { data, onDelete, onClick } = this.props;
     const deviceData = this.getDeviceData();
-    const { Currtemp_Para, Settemp_Para, Resttime_Para, Unit_Flag } = deviceData.data;
-    const resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
-
+    const { Currtemp_Para, Settemp_Para, Resttime_Para, Unit_Flag, Holdtime_Para } = deviceData.data;
+    let resttime = '';
+    if (Resttime_Para !== 0) {
+      resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
+    } else {
+      resttime = `${formattingNum(parseInt(Holdtime_Para / 60))}:${formattingNum(parseInt(Holdtime_Para % 60))}`;
+    }
     return (
       <div className="z-depth-1" style={itemStyles.itemContainerBox}>
         <SwipeAction
@@ -133,7 +137,13 @@ class Item extends Component {
               data.netStatus === 2 ? (
                 <div style={itemStyles.statusBar}>
                   <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="TEMP" />} value={(Currtemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)} />
-                  <ItemStatusBar icon="mdi mdi-history" label={<FormattedMessage id="TIME" />} value={`-${resttime}`} unit="" border />
+                  <ItemStatusBar
+                    icon={`mdi mdi-${Resttime_Para !== 0 ? 'history' : 'check'}`}
+                    value={`${Resttime_Para !== 0 ? '-' : ''}${resttime}`}
+                    label={<FormattedMessage id="TIME" />}
+                    unit=""
+                    border
+                  />
                   <ItemStatusBar icon="mdi mdi-oil-temperature" label={<FormattedMessage id="SET_TEMP" />} value={(Settemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)} />
                 </div>
               ) : null

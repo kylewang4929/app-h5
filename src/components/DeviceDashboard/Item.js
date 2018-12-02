@@ -167,8 +167,15 @@ class Item extends Component {
     const { select, Settemp_Para, Settime_Para } = this.state;
     const deviceData = this.getDeviceData();
     console.log('deviceData', deviceData);
-    const { Currtemp_Para, Unit_Flag } = deviceData.data;
-    const resttime = `${formattingNum(parseInt(Settime_Para / 60))}:${formattingNum(parseInt(Settime_Para % 60))}`;
+    const { Currtemp_Para, Unit_Flag, Resttime_Para, Holdtime_Para } = deviceData.data;
+    // const resttime = `${formattingNum(parseInt(Settime_Para / 60))}:${formattingNum(parseInt(Settime_Para % 60))}`;
+
+    let resttime = '';
+    if (Resttime_Para !== 0) {
+      resttime = `${formattingNum(parseInt(Resttime_Para / 60))}:${formattingNum(parseInt(Resttime_Para % 60))}`;
+    } else {
+      resttime = `${formattingNum(parseInt(Holdtime_Para / 60))}:${formattingNum(parseInt(Holdtime_Para % 60))}`;
+    }
 
     const flag = this.getFlag();
     const { min, max } = getScale(Unit_Flag);
@@ -188,10 +195,11 @@ class Item extends Component {
             <ItemStatusBar active icon="mdi mdi-oil-temperature" label={<FormattedMessage id="CURRENT_TEMP" />} value={(Currtemp_Para / 10).toFixed(1)} unit={getUnitText(Unit_Flag)} />
             <ItemStatusBar
               // active={select === 'time'}
-              icon="mdi mdi-history"
+              icon={`mdi mdi-${Resttime_Para !== 0 ? 'history' : 'check'}`}
+              value={`${Resttime_Para !== 0 ? '-' : ''}${resttime}`}
               onClick={() => { this.setState({ select: 'time' }); }}
               label={<FormattedMessage id="TIME" />}
-              value={`-${resttime}`} unit=""
+              unit=""
             />
             <ItemStatusBar
               // active={select === 'temp'}
