@@ -71,6 +71,11 @@ class App extends Component {
     }, false);
 
     document.addEventListener('deviceready', () => {
+      try {
+        window.Keyboard.automaticScrollToTopOnHiding = true;
+      } catch (error) {
+
+      }
       // if (device.platform === 'Android') {
       //   window.StatusBar.hide();
       // }

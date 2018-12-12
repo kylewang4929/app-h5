@@ -1,10 +1,10 @@
 
-import { init, write, unbindDevice, setCustomInfo, getCurrentCloudService, apiLogin } from '../services/gizwitsSdk';
+import { init, write, unbindDevice, getCurrentCloudService, apiLogin } from '../services/gizwitsSdk';
+import { setCustomInfo } from '../services/openApi';
 import { groupWrite } from '../services/deviceGroup';
 import config from '../config/template';
 import { getProductKeys, getProductSecrets } from '../utils/configExpand';
 import router from '../utils/router';
-import MyToast from '../utils/Toast';
 import { getLanguageString } from '../utils/getLanguage';
 import { conversionDataPointCToF, conversionDataPoint } from '../utils/conversionDataPoint';
 
@@ -121,13 +121,15 @@ export default {
     },
     * setCustomInfo({ payload }, { call, put }) {
       const { device, alias, remark } = payload;
+
       const data = yield call(setCustomInfo, { device, remark, alias });
+      console.log('setCustomInfo', data);
       if (data.success) {
         if (alias) yield put({ type: 'deviceList/renameDevice', payload: { device, alias } });
         if (remark) yield put({ type: 'deviceList/remarkDevice', payload: { device, remark } });
-        payload.success();
+        payload.success && payload.success();
       } else {
-        payload.error();
+        payload.error && payload.error();
       }
     },
     * templateSendCmd({ payload }, { put, select }) {

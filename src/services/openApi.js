@@ -77,6 +77,20 @@ export async function setUserAlias({ shareId, userAlias }) {
   );
 }
 
+export async function setCustomInfo({ remark, alias, device }) {
+  return openApiRequest(
+    `app/bindings/${device.did}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({
+        remark,
+        dev_alias: alias,
+      }),
+    },
+  );
+}
+
+
 export async function forgotPassword(payload) {
   console.log('/app/reset_password', payload, JSON.stringify(payload));
   return openApiRequest(

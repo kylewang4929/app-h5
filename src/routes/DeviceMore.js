@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { List, Button, Modal, ActionSheet } from 'antd-mobile';
+import { List, Button, Modal, ActionSheet, Switch } from 'antd-mobile';
 import { FormattedMessage } from 'react-intl';
 import BackButton from '../containers/MenuButton/BackButton';
 import NavBar from '../containers/NavBar';
@@ -27,7 +27,10 @@ const styles = {
 const deviceIcon = require('../assets/logo.png');
 
 class DeviceMore extends Component {
-  rename = (data) => {
+  rename = (dataItem) => {
+    const { deviceList: { data }, params: { did } } = this.props;
+    const device = data.find(v => v.did === did);
+
     const { language } = this.props;
 
     const CANCEL = getLanguageString(language.key, 'CANCEL');
@@ -42,11 +45,11 @@ class DeviceMore extends Component {
             const { dispatch } = this.props;
             dispatch({
               type: 'gizwitsSdk/setCustomInfo',
-              payload: { device, value },
+              payload: { device, alias: value, remark: device.remark },
             });
           },
         },
-      ], 'default', data.name);
+      ], 'default', dataItem.name);
   }
   delete = (data) => {
     const { dispatch, language } = this.props;
@@ -101,9 +104,25 @@ class DeviceMore extends Component {
       });
     });
   }
+  switchEcho = (value) => {
+    // 编辑
+    const { dispatch, deviceList: { data }, params: { did } } = this.props;
+    const device = data.find(v => v.did === did);
+
+    const remark = {
+      echo: !value,
+    };
+
+    dispatch({
+      type: 'gizwitsSdk/setCustomInfo',
+      payload: { device, remark: JSON.stringify(remark), alias: device.name },
+    });
+  }
   render() {
     const { deviceList: { data }, params: { did }, deviceData } = this.props;
     const device = data.find(v => v.did === did);
+    console.log(device.remark || '{}');
+    const remark = JSON.parse(device.remark || '{}');
     const unit = deviceData[did].data.Unit_Flag;
     return (
       <div>
@@ -117,7 +136,15 @@ class DeviceMore extends Component {
               thumb={deviceIcon}
               arrow="horizontal"
               onClick={this.rename.bind(null, device)}
-            >{device.dev_alias || <FormattedMessage id="HEATING_RODS" />}</Item>
+            >{device.name || <FormattedMessage id="HEATING_RODS" />}</Item>
+            <Item
+              extra={
+                <Switch
+                  checked={remark.echo}
+                  onClick={this.switchEcho.bind(null, remark.echo)}
+                />
+            }
+            ><FormattedMessage id="ENABLE_ECHO" /></Item>
           </List>
 
           <List style={styles.list} className="my-list">

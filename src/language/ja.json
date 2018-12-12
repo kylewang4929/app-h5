@@ -364,5 +364,6 @@
   "CONNECT_WIFI_TIPS":"Please connect to wi-fi before performing this operation",
   "CONNECT_WIFI_TIPS_1": "To configure the network, you need to get current wi-fi information",
   "CONNECT_WIFI_TIPS_2": "And Android requires access to wi-fi information to enable location services",
-  "CONNECT_WIFI_TIPS_3": "To continue, click the button below to set the open location service"
+  "CONNECT_WIFI_TIPS_3": "To continue, click the button below to set the open location service",
+  "ENABLE_ECHO": "Enable Echo"
 }
